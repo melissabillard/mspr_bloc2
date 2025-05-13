@@ -1,3 +1,6 @@
+import '../components/Header.css';
+import logo from '../assets/COFRAP_LOGO.png';
+
 function Header() {
   const menuItems = [
     { name: 'Home', link: '/' },
@@ -6,15 +9,19 @@ function Header() {
   ];
 
   return (
-    <nav padding="none">
-      <ul>
-        {menuItems.map((item, index) => (
-          <li key={index}>
-            <a href={item.link}>{item.name}</a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div className="header-container">
+      <img src={logo} alt="Logo" />
+      <nav className='navbar'>
+        <ul>
+          {menuItems.map((item, index) => (
+            <li key={index}>
+              <a href={item.link}>{item.name}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
   );
 }
 export default Header;

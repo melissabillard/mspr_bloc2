@@ -1,3 +1,22 @@
+/* 
+Couleur principale : #6A0DAD - Violet profond – utilisé pour les titres, le logo, les boutons principaux
+Accent clair : #A678D1 - Lavande moyen – utilisé pour les hover, sous-titres, bords décoratifs
+Fond clair : #F3ECF9 - Blanc lavande – idéal pour les fonds de page, sections
+Texte standard : #2B2B2B - Gris très foncé – utilisé pour les textes principaux, très lisible
+Accent secondaire : #D1C4E9 - Violet pâle – utilisé pour les encadrés, infobox, fonds alternés
+Couleur complémentaire : #00BFA6 - Vert menthe – pour les icônes ou éléments contrastants/positifs 
+*/
+
+:root {
+  --main-color: #6A0DAD;
+  --light-accent: #A678D1;
+  --light-background: #F3ECF9;
+  --dark-text: #2B2B2B;
+  --secondary-accent: #D1C4E9;
+  --complementary-color: #00BFA6;
+  --font-family: 'Poppins', sans-serif;
+}
+
 .App {
   text-align: center;
   display: flex;
@@ -6,3 +25,4 @@
   align-items: center;
   height: 100vh;
 }
+
