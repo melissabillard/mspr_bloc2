@@ -3,7 +3,10 @@ name: CI/CD Pipeline
 on: 
   push:
     branches: 
-      - main  # Déclenché à chaque push sur main
+      - main  # Déclenché à chaque push sur main, y compris les merges
+  pull_request:
+    branches:
+      - main  # Déclenché lors de la création, mise à jour ou fusion d'une PR vers main
 
 jobs:
   CI_CD_Pipeline:
