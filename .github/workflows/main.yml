@@ -43,5 +43,5 @@ jobs:
           git config user.email "github-actions@github.com"
           git fetch origin main
           git checkout -B release origin/main
-          git push --force https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/melissabillard/projet-auto-test.git release
+          git push --force https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/melissabillard/mspr_bloc2.git release
           echo "Force push de main vers release effectué"
