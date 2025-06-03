@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/build/bundle.6921e6b8.js",
+    "COFRAP_LOGO.png": "/d7e8539d014a0a039f4c.png",
+    "index.html": "/index.html"
+  },
+  "entrypoints": [
+    "build/bundle.6921e6b8.js"
+  ]
+}
