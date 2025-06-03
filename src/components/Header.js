@@ -1,16 +1,14 @@
-import '../components/Header.css';
 import logo from '../assets/COFRAP_LOGO.png';
 
 function Header() {
   const menuItems = [
-    { name: 'Home', link: '/' },
-    { name: 'Sign In', link: '/signin' },
-    { name: 'Log In', link: '/login' },
+    { name: 'Se connecter', link: '/login' },
+    { name: 'Créer un compte', link: '/signin' }
   ];
 
   return (
     <div className="header-container">
-      <img src={logo} alt="Logo" />
+      <a href='/' className="logo-header"><img src={logo} alt="Logo" /></a>
       <nav className='navbar'>
         <ul>
           {menuItems.map((item, index) => (

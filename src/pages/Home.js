@@ -1,9 +1,12 @@
+import logo from '../assets/COFRAP_LOGO.png';
+
 
 function Home() {
   return (
     <div>
-        <h1>Welcome to the Home Page</h1>
-        <p>This is the home page of our application.</p>
+        <img src={logo} alt="Logo" className="logo-img-home" />
+        <h1 className="titre1-home">Bienvenue à COFRAP !</h1>
+        <p>L’intelligence collective au cœur du cloud.</p>
     </div>
   );
 }
