@@ -1,9 +1,38 @@
+/**
+ * Composant Markup
+ *
+ * Point d'entrée principal de la navigation de l'application.
+ * Configure les routes avec React Router et associe chaque URL à une page.
+ *
+ * Routes définies :
+ * - `/` → Home
+ * - `/signin` → Signin
+ * - `/login` → Login
+ * - `*` → redirection vers Home
+ *
+ * Exemple :
+ * ```jsx
+ * <Markup />
+ * ```
+ */
+
+/**
+ * Composant de pied de page
+ *
+ * Affiche des informations légales ou de contact en bas de page.
+ *
+ * Exemple :
+ * ```jsx
+ * <Footer />
+ * ```
+ */
+
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Login from "../pages/Login";
-import Signin from "../pages/Signin";
-import Home from "../pages/Home";
+import Login from "../pages/Login/Login";
+import Signin from "../pages/Signin/Signin";
+import Home from "../pages/Home/Home";
 
 export default function Markup(props) {
     return (

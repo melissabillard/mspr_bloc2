@@ -3,12 +3,24 @@ import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
 import Swal from "sweetalert2"
 
+/**
+ * Composant Signin
+ *
+ * @returns {JSX.Element} Le formulaire d'inscription.
+ */
+
 function Signin(){
 
     const navigate = useNavigate()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+  /**
+   * Gère la soumission du formulaire d'inscription.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - L'événement de soumission du formulaire.
+   */
 
     async function handleLogin(e){
         e.preventDefault()

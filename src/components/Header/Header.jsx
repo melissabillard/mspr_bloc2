@@ -1,4 +1,4 @@
-import logo from '../assets/COFRAP_LOGO.png';
+import logo from '../../assets/COFRAP_LOGO.png';
 
 function Header() {
   const menuItems = [

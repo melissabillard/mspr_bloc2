@@ -1,7 +1,7 @@
 import './App.css';
 import Markup from './components/markup.jsx';
-import Footer from './components/Footer.js';
-import Header from './components/Header.js';
+import Footer from './components/Footer/Footer.jsx';
+import Header from './components/Header/Header.jsx';
 
 
 function App() {

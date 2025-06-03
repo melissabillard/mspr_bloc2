@@ -1,3 +1,14 @@
+/**
+ * Composant de pied de page
+ *
+ * Affiche des informations légales ou de contact en bas de page.
+ *
+ * Exemple :
+ * ```jsx
+ * <Footer />
+ * ```
+ */
+
 function Footer() {
   return (
     <footer className="footer">
