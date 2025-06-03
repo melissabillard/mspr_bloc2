@@ -1,14 +1,3 @@
-/**
- * Composant Login
- *
- * Affiche un formulaire de connexion avec email et mot de passe.
- * Envoie les données à l'API pour authentification, stocke le token JWT et redirige l'utilisateur.
- * ```jsx
- * <Login />
- * ```
- */
-
-
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"

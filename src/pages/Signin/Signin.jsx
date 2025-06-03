@@ -1,17 +1,3 @@
-/**
- * Composant Signin
- *
- * Affiche un formulaire d'inscription avec les champs email et mot de passe.
- * Envoie les données à l'API pour créer un compte utilisateur, stocke le token JWT et redirige l'utilisateur.
- *
- * @component
- * @example
- * return (
- *   <Signin />
- * )
- */
-
-
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"

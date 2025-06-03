@@ -16,12 +16,23 @@
  * ```
  */
 
+/**
+ * Composant de pied de page
+ *
+ * Affiche des informations légales ou de contact en bas de page.
+ *
+ * Exemple :
+ * ```jsx
+ * <Footer />
+ * ```
+ */
+
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Login from "../pages/Login";
-import Signin from "../pages/Signin";
-import Home from "../pages/Home";
+import Login from "../pages/Login/Login";
+import Signin from "../pages/Signin/Signin";
+import Home from "../pages/Home/Home";
 
 export default function Markup(props) {
     return (
