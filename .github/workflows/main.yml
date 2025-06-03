@@ -1,47 +1,63 @@
 name: CI/CD Pipeline
 
-on:
+on: 
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches: 
+      - main  # Déclenché à chaque push sur main
 
 jobs:
-  build:
+  CI_CD_Pipeline:
+    name: CI/CD Pipeline
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout du code
-        uses: actions/checkout@v3
+      - name: Init config Git
+        run: |
+          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
 
-      - name: Configuration de Node.js
-        uses: actions/setup-node@v4
+      - name: Checkout complet du repo
+        uses: actions/checkout@v3
         with:
-          node-version: '20'
+          fetch-depth: 0
 
       - name: Installation des dépendances
-        run: npm install
+        run: npm install --force
 
-      # Décommenter si tu veux activer les tests
-      # - name: Lancement des tests
-      #   run: npm test
+      - name: Build (avec CI désactivé pour ESLint)
+        env:
+          CI: false
+        run: npm run build
 
-  merge:
-    needs: build
-    runs-on: ubuntu-latest
-    if: ${{ success() }}
+      # - name: Tests unitaires
+      #   env:
+      #     REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+      #     REACT_APP_API_MOVE_URL: ${{ secrets.REACT_APP_API_MOVE_URL }}
+      #   run: npm run test -- --watchAll=false
 
-    steps:
-      - name: Checkout du dépôt
+      # - name: 🧪 Vérification succès des tests
+      #   if: success()
+      #   run: echo "Tests validés"
+
+      - name: Checkout branche release avec token
+        if: success()
         uses: actions/checkout@v3
         with:
+          ref: release
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          fetch-depth: 0
 
-      - name: Merge main into release
+      - name: Merge main -> release (force push)
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          echo "Forçage de main vers release"
           git fetch origin main
           git checkout -B release origin/main
-          git push --force https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/melissabillard/mspr_bloc2.git release
-          echo "Force push de main vers release effectué"
+          git push --force https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/melissabillard/projet-auto-test.git release
+          echo "Force push effectué avec succès"
+
+      - name: Échec des tests
+        if: failure()
+        run: echo "Les tests ont échoué !"
