@@ -1,13 +1,16 @@
-import logo from '../assets/COFRAP_LOGO.png';
-
+import React from "react";
+import Hero from "../components/Hero";
+import Features from "../components/Features";
+import CTA from "../components/CTA";
 
 function Home() {
   return (
-    <div>
-        <img src={logo} alt="Logo" className="logo-img-home" />
-        <h1 className="titre1-home">Bienvenue à COFRAP !</h1>
-        <p>L’intelligence collective au cœur du cloud.</p>
+    <div className="w-full bg-gradient-to-br from-cofrap-light to-cofrap-secondary">
+      <Hero />
+      <Features />
+      <CTA />
     </div>
   );
 }
+
 export default Home;
