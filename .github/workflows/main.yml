@@ -22,5 +22,26 @@ jobs:
       - name: Installation des dépendances
         run: npm install
 
+      # Décommenter si tu veux activer les tests
       # - name: Lancement des tests
       #   run: npm test
+
+  merge:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+
+    steps:
+      - name: Checkout du dépôt
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Merge main into release
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git fetch origin main
+          git checkout -B release origin/main
+          git push --force https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/melissabillard/projet-auto-test.git release
+          echo "Force push de main vers release effectué"
