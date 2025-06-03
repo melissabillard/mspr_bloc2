@@ -1,15 +1,12 @@
-import './App.css';
-import Markup from './components/markup.jsx';
-import Footer from './components/Footer.js';
-import Header from './components/Header.js';
-
+import "./App.css";
+import Markup from "./components/markup.jsx";
+import Footer from "./components/Footer.js";
 
 function App() {
   return (
     <div className="App">
-        <Header />
-        <Markup />
-        <Footer />
+      <Markup />
+      <Footer />
     </div>
   );
 }
