@@ -1,3 +1,15 @@
+/**
+ * Composant Home
+ *
+ * Page d'accueil de l'application COFRAP.
+ * Affiche le logo de l'entreprise, un titre de bienvenue et une description.
+ *
+ * Exemple :
+ * ```jsx
+ * <Home />
+ * ```
+ */
+
 import logo from '../assets/COFRAP_LOGO.png';
 
 

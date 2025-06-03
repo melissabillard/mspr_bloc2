@@ -1,7 +1,24 @@
+/**
+ * Composant Login
+ *
+ * Affiche un formulaire de connexion avec email et mot de passe.
+ * Envoie les données à l'API pour authentification, stocke le token JWT et redirige l'utilisateur.
+ * ```jsx
+ * <Login />
+ * ```
+ */
+
+
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
 import Swal from "sweetalert2"
+
+/**
+ * Composant Login
+ *
+ * @returns {JSX.Element} Le formulaire de connexion.
+ */
 
 function Login(){
 
@@ -9,6 +26,12 @@ function Login(){
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    /**
+   * Gère la soumission du formulaire de connexion.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - L'événement de soumission du formulaire.
+   */
 
     async function handleLogin(e){
         e.preventDefault()

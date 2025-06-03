@@ -1,7 +1,27 @@
+/**
+ * Composant Signin
+ *
+ * Affiche un formulaire d'inscription avec les champs email et mot de passe.
+ * Envoie les données à l'API pour créer un compte utilisateur, stocke le token JWT et redirige l'utilisateur.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Signin />
+ * )
+ */
+
+
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
 import Swal from "sweetalert2"
+
+/**
+ * Composant Signin
+ *
+ * @returns {JSX.Element} Le formulaire d'inscription.
+ */
 
 function Signin(){
 
@@ -9,6 +29,12 @@ function Signin(){
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+  /**
+   * Gère la soumission du formulaire d'inscription.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - L'événement de soumission du formulaire.
+   */
 
     async function handleLogin(e){
         e.preventDefault()

@@ -1,3 +1,16 @@
+/**
+ * Composant d'en-tête du site
+ *
+ * Affiche le logo, le nom du site et un menu de navigation.
+ *
+ * Exemple :
+ * ```jsx
+ * <Header />
+ * ```
+ */
+
+
+
 import logo from '../assets/COFRAP_LOGO.png';
 
 function Header() {
