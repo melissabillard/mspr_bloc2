@@ -1,6 +1,18 @@
 import React from "react";
 import logo from "../assets/COFRAP_LOGO.png";
 
+/**
+ * Composant de pied de page
+ *
+ * Affiche des informations légales ou de contact en bas de page.
+ *
+ * Exemple :
+ * ```jsx
+ * <Footer />
+ * ```
+ */
+
+
 function Footer() {
   return (
     <footer className="w-full bg-white text-cofrap-text py-16 px-4">

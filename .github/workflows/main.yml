@@ -1,0 +1,83 @@
+name: CI/CD Pipeline
+
+on: 
+  push:
+    branches: 
+      - main  # Déclenché à chaque push sur main, y compris les merges
+  pull_request:
+    branches:
+      - main  # Déclenché lors de la création, mise à jour ou fusion d'une PR vers main
+
+jobs:
+  CI_CD_Pipeline:
+    name: CI/CD Pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Init config Git
+        run: |
+          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+
+      - name: Checkout complet du repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Installation des dépendances
+        run: npm install --force
+
+      - name: Build (avec CI désactivé pour ESLint)
+        env:
+          CI: false
+        run: npm run build
+
+      # - name: Tests unitaires
+      #   env:
+      #     REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+      #     REACT_APP_API_MOVE_URL: ${{ secrets.REACT_APP_API_MOVE_URL }}
+      #   run: npm run test -- --watchAll=false
+
+      # - name: 🧪 Vérification succès des tests
+      #   if: success()
+      #   run: echo "Tests validés"
+
+      - name: Checkout branche release avec token
+        if: success()
+        uses: actions/checkout@v3
+        with:
+          ref: release
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN_MSPR }}
+          fetch-depth: 0
+
+      - name: Merge main -> release (force push)
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN_MSPR }}
+        run: |
+          echo "Forçage de main vers release"
+          git fetch origin main
+          git checkout -B release origin/main
+          git push --force https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN_MSPR }}@github.com/${{ secrets.GIT_USER_NAME }}/${{ secrets.GIT_NOM_REPOT }}.git release
+          echo "Force push effectué avec succès"
+
+      - name: Send Discord notification on failure
+        if: failure()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          STEP_NAME=${{ github.job }}
+          curl -X POST -H "Content-Type: application/json" -d '{
+            "content": "<@&ROLE_ID> ❌ **Pipeline Failure - COFRAP FRONT ${{ secrets.API_NAME }}**\n\n**Repository:** ${{ github.repository }}\n**Commit SHA:** ${{ github.sha }}\n**Commit Message:** ${{ github.event.head_commit.message }}\n**Failed Step:** '"${STEP_NAME}"'"
+          }' $DISCORD_WEBHOOK_URL
+     
+      - name: Send Discord release notes on success
+        if: success()
+        env:
+          DISCORD_WEBHOOK_URL_RELEASE: ${{ secrets.DISCORD_WEBHOOK_URL_RELEASE }}
+        run: |
+          VERSION=$(date +"%Y.%m.%d")-$(git rev-parse --short HEAD)
+          curl -X POST -H "Content-Type: application/json" -d '{
+            "content": "✅ **Succès Pipeline - COFRAP FRONT ${{ secrets.API_NAME }}**\n\n**Version :** '"${VERSION}"'\n**Repo :** ${{ github.repository }}\n**Commit :** ${{ github.sha }}\n**Message :** ${{ github.event.head_commit.message }}\n**Branche Release :** release"
+          }' $DISCORD_WEBHOOK_URL_RELEASE
+

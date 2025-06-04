@@ -28,3 +28,17 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Documentation
+
+### React Styleguidist
+#### Lancer le serveur Styleguidist
+`npx styleguidist server`
+
+👉 Tu accèderas à la doc sur http://localhost:6060
+
+#### (Optionnel) Générer la doc en HTML statique
+`npx styleguidist build`
+
+Cela crée un dossier styleguide/ prêt à être hébergé.
+
