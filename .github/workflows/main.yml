@@ -36,7 +36,7 @@ jobs:
       - name: Dépendances installées
         run: echo "Installation terminée"
 
- release:
+  release:
     name: Release and Notify
     runs-on: ubuntu-latest
     needs: publish
