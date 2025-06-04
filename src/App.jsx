@@ -1,17 +1,10 @@
-import './App.css';
-import Markup from './components/markup.jsx';
+import "./App.css";
+import Markup from "./components/markup.jsx";
 import Footer from './components/Footer/Footer.jsx';
 import Header from './components/Header/Header.jsx';
 
-
 function App() {
-  return (
-    <div className="App">
-        <Header />
-        <Markup />
-        <Footer />
-    </div>
-  );
+  return <Markup />;
 }
 
 export default App;
