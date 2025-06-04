@@ -30,8 +30,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./Header/Header";
+import Footer from "./Footer/Footer";
 import Login from "../pages/Login/Login";
 import Signin from "../pages/Signin/Signin";
 import Home from "../pages/Home/Home";

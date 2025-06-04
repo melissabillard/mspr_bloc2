@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/COFRAP_LOGO.png";
+import logo from "../../assets/COFRAP_LOGO.png";
 
 /**
  * Composant de pied de page
