@@ -10,6 +10,7 @@ import {
 } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
+import logo from "../../assets/COFRAP_LOGO.png";
 
 /**
  * Composant Signin - Page d'inscription simplifiée MSPR
@@ -31,15 +32,24 @@ function Signin() {
   async function handleSignup(e) {
     e.preventDefault();
     if (username.trim()) {
-      // Sauvegarder le username pour l'utiliser plus tard
-      localStorage.setItem("username", username);
+      // Sauvegarder le username avec majuscule pour l'utiliser plus tard
+      localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
       // Rediriger vers le dashboard
       navigate("/dashboard");
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cofrap-light to-cofrap-secondary flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-cofrap-light to-cofrap-secondary flex items-center justify-center p-4 pt-16">
+      {/* Bouton retour à l'accueil */}
+      <Link 
+        to="/" 
+        className="fixed top-4 left-4 flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:bg-white z-50"
+      >
+        <img src={logo} alt="COFRAP Logo" className="h-8 w-auto object-contain" />
+        <span className="text-cofrap-text font-semibold">COFRAP</span>
+      </Link>
+
       <Card className="w-full max-w-md shadow-xl border-0">
         <CardHeader className="text-center pb-8">
           <CardTitle className="text-2xl font-bold text-cofrap-text">

@@ -10,35 +10,30 @@ import {
 } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { Eye, EyeOff } from "lucide-react";
 import logo from "../../assets/COFRAP_LOGO.png";
 
 /**
- * Composant Login - Page de connexion moderne MSPR
- * Utilise username et password selon les spécifications du projet
+ * Composant ForgotPassword - Page mot de passe oublié MSPR
+ * Demande le username et redirige vers le dashboard pour un nouveau QR code
  *
- * @returns {JSX.Element} Le formulaire de connexion moderne.
+ * @returns {JSX.Element} Le formulaire de récupération de mot de passe.
  */
 
-function Login() {
-  const [showPassword, setShowPassword] = useState(false);
+function ForgotPassword() {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username.trim() && password.trim()) {
-      // Marquer l'utilisateur comme authentifié
+    if (username.trim()) {
+      // Sauvegarder le username avec majuscule et marquer comme récupération de mot de passe
       localStorage.setItem(
         "username",
         username.charAt(0).toUpperCase() + username.slice(1)
       );
-      localStorage.setItem("authenticated", "true");
-      // Nettoyer les flags temporaires
-      localStorage.removeItem("password_recovery");
-      // Redirection vers l'accueil connecté
-      navigate("/home-authenticated");
+      localStorage.setItem("password_recovery", "true");
+      // Rediriger vers le dashboard pour un nouveau QR code
+      navigate("/dashboard");
     }
   };
 
@@ -60,10 +55,11 @@ function Login() {
       <Card className="w-full max-w-md shadow-xl border-0">
         <CardHeader className="text-center pb-8">
           <CardTitle className="text-2xl font-bold text-cofrap-text">
-            Se connecter
+            Mot de passe oublié
           </CardTitle>
           <CardDescription className="text-gray-600">
-            Accédez à votre compte COFRAP
+            Saisissez votre nom d'utilisateur pour recevoir un nouveau mot de
+            passe
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -86,68 +82,48 @@ function Login() {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label
-                htmlFor="password"
-                className="text-sm font-medium text-gray-700"
-              >
-                Mot de passe
-              </Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Votre mot de passe"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="h-11 pr-10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-4 h-4" />
-                  ) : (
-                    <Eye className="w-4 h-4" />
-                  )}
-                </button>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <svg
+                    className="h-5 w-5 text-blue-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm text-blue-700">
+                    Vous recevrez un nouveau QR code à scanner pour obtenir
+                    votre nouveau mot de passe.
+                  </p>
+                </div>
               </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember"
-                  type="checkbox"
-                  className="h-4 w-4 text-cofrap-primary focus:ring-cofrap-primary border-gray-300 rounded"
-                />
-                <Label
-                  htmlFor="remember"
-                  className="ml-2 text-sm text-gray-600"
-                >
-                  Se souvenir de moi
-                </Label>
-              </div>
-              <Link
-                to="/forgot-password"
-                className="text-sm text-cofrap-primary hover:text-cofrap-accent transition-colors"
-              >
-                Mot de passe oublié ?
-              </Link>
             </div>
 
             <Button
               type="submit"
               className="w-full h-11 bg-gradient-to-r from-cofrap-primary to-cofrap-accent hover:from-purple-800 hover:to-purple-400 text-white font-medium transform hover:scale-105 transition-all duration-300"
             >
-              Se connecter
+              Récupérer mon mot de passe
             </Button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center space-y-2">
+            <p className="text-sm text-gray-600">
+              Vous vous souvenez de votre mot de passe ?{" "}
+              <Link
+                to="/login"
+                className="text-cofrap-primary hover:text-cofrap-accent font-medium transition-colors"
+              >
+                Se connecter
+              </Link>
+            </p>
             <p className="text-sm text-gray-600">
               Pas encore de compte ?{" "}
               <Link
@@ -164,4 +140,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ForgotPassword;
