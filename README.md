@@ -38,6 +38,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 👉 Tu accèderas à la doc sur http://localhost:6060
 
 #### (Optionnel) Générer la doc en HTML statique
+test
 
 `npx styleguidist build`
 
