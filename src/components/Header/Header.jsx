@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { Button } from "../../components/ui/button";
-import logo from '../../assets/COFRAP_LOGO.png';
+import { Button } from "../ui/button";
+import logo from "../../assets/COFRAP_LOGO.png";
 
 function Header() {
   return (

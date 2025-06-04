@@ -12,7 +12,6 @@ import logo from "../../assets/COFRAP_LOGO.png";
  * ```
  */
 
-
 function Footer() {
   return (
     <footer className="w-full bg-white text-cofrap-text py-16 px-4">

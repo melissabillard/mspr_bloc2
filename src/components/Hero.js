@@ -20,7 +20,7 @@ function Hero() {
           <Link to="/signin">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-cofrap-primary to-cofrap-accent hover:from-purple-800 hover:to-purple-400 px-8 py-3 text-lg"
+              className="bg-gradient-to-r from-cofrap-primary to-cofrap-accent hover:from-purple-800 hover:to-purple-400 px-8 py-3 text-lg transform hover:scale-105 transition-all duration-300 ease-in-out hover:shadow-lg"
             >
               Commencer
             </Button>
@@ -29,7 +29,7 @@ function Hero() {
             <Button
               size="lg"
               variant="outline"
-              className="px-8 py-3 text-lg border-cofrap-accent text-cofrap-primary hover:bg-cofrap-light"
+              className="px-8 py-3 text-lg border-2 border-cofrap-primary text-cofrap-primary hover:bg-cofrap-primary hover:text-white transform hover:scale-105 transition-all duration-300 ease-in-out hover:shadow-lg"
             >
               Se connecter
             </Button>

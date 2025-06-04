@@ -34,8 +34,7 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Login from "../pages/Login/Login";
 import Signin from "../pages/Signin/Signin";
-import Home from "../pages/Home/Home";
-
+import Home from "../pages/Home";
 
 export default function Markup(props) {
   return (

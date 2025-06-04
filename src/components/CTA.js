@@ -15,7 +15,7 @@ function CTA() {
         <Link to="/signin">
           <Button
             size="lg"
-            className="bg-white text-cofrap-primary hover:bg-gray-100 px-8 py-3 text-lg"
+            className="bg-white text-cofrap-primary hover:bg-gray-50 hover:text-cofrap-accent px-8 py-3 text-lg transform hover:scale-105 transition-all duration-300 ease-in-out hover:shadow-xl border-2 border-transparent hover:border-white"
           >
             Créer un compte
           </Button>
