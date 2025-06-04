@@ -10,7 +10,7 @@ function Header() {
           <img
             src={logo}
             alt="COFRAP Logo"
-            className="h-16 w-auto object-contain"
+            className="h-16 w-auto object-contain transform hover:scale-110 hover:rotate-3 transition-all duration-300 ease-in-out"
           />
         </Link>
         <nav className="flex items-center space-x-4">

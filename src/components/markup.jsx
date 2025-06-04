@@ -8,6 +8,7 @@
  * - `/` → Home
  * - `/signin` → Signin
  * - `/login` → Login
+ * - `/dashboard` → Dashboard
  * - `*` → redirection vers Home
  *
  * Exemple :
@@ -35,6 +36,7 @@ import Footer from "./Footer/Footer";
 import Login from "../pages/Login/Login";
 import Signin from "../pages/Signin/Signin";
 import Home from "../pages/Home";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
 export default function Markup(props) {
   return (
@@ -47,6 +49,7 @@ export default function Markup(props) {
               <Route path="/" element={<Home />} />
               <Route path="/signin" element={<Signin />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="*" element={<Home />} />
             </Routes>
           </main>
