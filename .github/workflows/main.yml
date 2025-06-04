@@ -1,4 +1,4 @@
-name: CI/CD Pipeline Python
+name: CI/CD Pipeline React
 
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
     name: Update version.json
     runs-on: ubuntu-latest
     needs: build-and-test
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout repo complet
@@ -63,12 +63,11 @@ jobs:
       - name: Commit version.json mise à jour
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN_MSPR }}
-        run: |
-          git add version.json
-          VERSION=$(date +"%Y.%m.%d")-$(git rev-parse --short HEAD)
-          git commit -m "Update version to $VERSION [skip ci]" || echo "Aucun changement à commettre"
-          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN_MSPR }}@github.com/${{ github.repository }}.git main
-
+          run: |
+            git add version.json
+            VERSION=$(date +"%Y.%m.%d")-$(git rev-parse --short HEAD)
+            git commit -m "Update version to $VERSION [skip ci]" || echo "Aucun changement à commettre"
+            git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN_MSPR }}@github.com/${{ github.repository }}.git main
   release:
     name: Release & Notify
     runs-on: ubuntu-latest
@@ -103,7 +102,7 @@ jobs:
         run: |
           STEP_NAME=${{ github.job }}
           curl -X POST -H "Content-Type: application/json" -d '{
-            "content": "<@&ROLE_ID> ❌ **Pipeline Failure - COFRAP FONCTIONS ${{ secrets.API_NAME }}**\n\n**Repository:** ${{ github.repository }}\n**Commit SHA:** ${{ github.sha }}\n**Commit Message:** ${{ github.event.head_commit.message }}\n**Failed Step:** '"${STEP_NAME}"'"
+            "content": "<@&ROLE_ID> ❌ **Pipeline Failure - COFRAP FRONT ${{ secrets.API_NAME }}**\n\n**Repository:** ${{ github.repository }}\n**Commit SHA:** ${{ github.sha }}\n**Commit Message:** ${{ github.event.head_commit.message }}\n**Failed Step:** '"${STEP_NAME}"'"
           }' $DISCORD_WEBHOOK_URL
 
       - name: Send Discord release notes on success
@@ -113,5 +112,5 @@ jobs:
         run: |
           VERSION=$(date +"%Y.%m.%d")-$(git rev-parse --short HEAD)
           curl -X POST -H "Content-Type: application/json" -d '{
-            "content": "✅ **Succès Pipeline - COFRAP FONCTIONS ${{ secrets.API_NAME }}**\n\n**Version :** '"${VERSION}"'\n**Repo :** ${{ github.repository }}\n**Commit :** ${{ github.sha }}\n**Message :** ${{ github.event.head_commit.message }}\n**Branche Release :** release"
+            "content": "✅ **Succès Pipeline - COFRAP FRONT ${{ secrets.API_NAME }}**\n\n**Version :** '"${VERSION}"'\n**Repo :** ${{ github.repository }}\n**Commit :** ${{ github.sha }}\n**Message :** ${{ github.event.head_commit.message }}\n**Branche Release :** release"
           }' $DISCORD_WEBHOOK_URL_RELEASE
