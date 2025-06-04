@@ -62,12 +62,12 @@ jobs:
 
       - name: Commit version.json mise à jour
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN_MSPR }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           git add version.json
           VERSION=$(date +"%Y.%m.%d")-$(git rev-parse --short HEAD)
           git commit -m "Update version to $VERSION [skip ci]" || echo "Aucun changement à commettre"
-          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN_MSPR }}@github.com/${{ github.repository }}.git main
+          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git main
 
   release:
     name: Release & Notify
