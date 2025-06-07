@@ -31,11 +31,40 @@ function Signin() {
    */
   async function handleSignup(e) {
     e.preventDefault();
-    if (username.trim()) {
-      // Sauvegarder le username avec majuscule pour l'utiliser plus tard
-      localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
-      // Rediriger vers le dashboard
-      navigate("/dashboard");
+
+    const trimmedUsername = username.trim();
+
+    console.log("username", username);
+
+    if (trimmedUsername) {
+        try {
+          const response = await fetch("http://192.168.64.4:30657/function/generate-password", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username: trimmedUsername }),
+          });
+
+          if (!response.ok) {
+            throw new Error("Erreur lors de la création du compte.");
+          }
+
+          const data = await response.json();
+
+          console.log("Réponse de l'API :", data);
+
+          // Sauvegarder le username avec majuscule pour l'utiliser plus tard
+          localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
+
+          // Rediriger vers le dashboard
+          navigate("/dashboard");
+
+      } catch (error) {
+          console.error("Erreur:", error);
+          alert("Échec de la création du compte. Veuillez réessayer.");
+      }
+
     }
   }
 
