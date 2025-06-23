@@ -34,8 +34,6 @@ function Signin() {
 
     const trimmedUsername = username.trim();
 
-    console.log("username", username);
-
     if (trimmedUsername) {
         try {
           const response = await fetch("http://api.cofrap.local/function/generate-password", {
@@ -45,24 +43,20 @@ function Signin() {
             },
             body: JSON.stringify({ username: trimmedUsername }),
           });
-          // console.log(response.status);
           if (!response.ok) {
             throw new Error("Erreur lors de la création du compte.");
           }
           
           const data = await response.json();
-          // console.log(data);
-
-          // console.log("Réponse de l'API :", data);
 
           // Sauvegarder le username avec majuscule pour l'utiliser plus tard
           localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
 
-          // Sauvegarder le QrCode pour récupérer mot de passe
-          localStorage.setItem("qr_code_base64", `data:image/png;base64,${data.qr_code_base64}`);
+          // Stocker le Qrcode pour l'afficher
+          const qrDataUrl = `data:image/png;base64,${data.qr_code_base64}`;
+          localStorage.setItem("qr_code_base64", qrDataUrl);
 
-          console.log("qr_code_base64", data.qr_code_base64);
-
+          console.log("qr_code_base64:", data.qr_code_base64);
 
           // Rediriger vers le dashboard
           navigate("/dashboard");

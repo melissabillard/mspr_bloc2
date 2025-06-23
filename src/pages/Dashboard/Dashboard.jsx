@@ -22,15 +22,25 @@ function Dashboard() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [isPasswordRecovery, setIsPasswordRecovery] = useState(false);
+  const [qrCodeSrc, setQrCodeSrc] = useState(""); 
+
 
   useEffect(() => {
     // Récupérer le username du localStorage
     const storedUsername = localStorage.getItem("username");
     const passwordRecovery = localStorage.getItem("password_recovery");
+    // Récupérer le qrcode du localStorage
+    const storedQrCode = localStorage.getItem("qr_code_base64"); // // déjà au format "data:image/png;base64,..."
 
     if (storedUsername) {
       setUsername(storedUsername);
       setIsPasswordRecovery(passwordRecovery === "true");
+      
+      // Si un QR code est stocké, on l'affiche
+      if (storedQrCode) {
+        setQrCodeSrc(storedQrCode);
+      }
+
     } else {
       // Si pas de username, rediriger vers l'inscription
       navigate("/signin");
@@ -98,9 +108,10 @@ function Dashboard() {
           <div className="flex justify-center">
             <div className="bg-white p-4 rounded-lg shadow-md">
               <img
-                src={qrCodeImage}
+                src={qrCodeSrc}
                 alt="QR Code pour recevoir le mot de passe"
                 className="w-48 h-48 object-contain"
+                // onError={() => setQrCodeSrc(qrCodeImage)} // fallback automatique
               />
             </div>
           </div>
