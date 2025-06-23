@@ -107,12 +107,12 @@ function Dashboard() {
           {/* QR Code */}
           <div className="flex justify-center">
             <div className="bg-white p-4 rounded-lg shadow-md">
-              {/* <img
+              <img
                 src={qrCodeSrc}
                 alt="QR Code pour recevoir le mot de passe"
                 className="w-48 h-48 object-contain"
                 // onError={() => setQrCodeSrc(qrCodeImage)} // fallback automatique
-              /> */}
+              />
             </div>
           </div>
 
