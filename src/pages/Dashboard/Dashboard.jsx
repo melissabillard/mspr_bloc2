@@ -91,7 +91,7 @@ function Dashboard() {
         </CardHeader>
         <CardContent className="text-center space-y-6">
           {/* Message spécifique selon le contexte */}
-          {isPasswordRecovery && (
+          {/* {isPasswordRecovery && (
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
               <div className="flex items-center justify-center">
                 <svg
@@ -110,7 +110,7 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-          )}
+          )} */}
 
           {/* QR Code Mot de passe*/}
           <div className="flex justify-center">
