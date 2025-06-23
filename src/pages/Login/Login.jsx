@@ -24,22 +24,39 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [twoFactorCode, setTwoFactorCode] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username.trim() && password.trim()) {
-      // Marquer l'utilisateur comme authentifié
-      localStorage.setItem(
-        "username",
-        username.charAt(0).toUpperCase() + username.slice(1)
-      );
-      localStorage.setItem("authenticated", "true");
-      // Nettoyer les flags temporaires
-      localStorage.removeItem("password_recovery");
-      // Redirection vers l'accueil connecté
-      navigate("/home-authenticated");
-    }
+    // if (username.trim() && password.trim()) {
+    //   // Marquer l'utilisateur comme authentifié
+    //   localStorage.setItem(
+    //     "username",
+    //     username.charAt(0).toUpperCase() + username.slice(1)
+    //   );
+    //   localStorage.setItem("authenticated", "true");
+    //   // Nettoyer les flags temporaires
+    //   localStorage.removeItem("password_recovery");
+    //   // Redirection vers l'accueil connecté
+    //   navigate("/home-authenticated");
+    // }
+
+    if (username.trim() && password.trim() && twoFactorCode.trim()) {
+    // Marquer l'utilisateur comme authentifié
+    localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
+    localStorage.setItem("authenticated", "true");
+
+    // Nettoyer les flags temporaires
+    localStorage.removeItem("password_recovery");
+
+    // Redirection vers l'accueil connecté
+    navigate("/home-authenticated");
+
+  } else {
+    alert("Veuillez remplir tous les champs, y compris le code 2FA.");
+  }
   };
 
   return (
@@ -118,19 +135,46 @@ function Login() {
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <input
                   id="remember"
                   type="checkbox"
                   className="h-4 w-4 text-cofrap-primary focus:ring-cofrap-primary border-gray-300 rounded"
                 />
-                <Label
+                {/* <Label
                   htmlFor="remember"
                   className="ml-2 text-sm text-gray-600"
                 >
                   Se souvenir de moi
-                </Label>
-              </div>
+                </Label> 
+              </div> */}
+
+              {/* Champ 2FA à gauche si username + password remplis */}
+              {username.trim() && password.trim() && (
+                <div className="flex flex-col">
+                  <Label
+                    htmlFor="twoFactorCode"
+                    className="text-sm text-gray-700"
+                  >
+                    Code 2FA
+                  </Label>
+                  <Input
+                    id="twoFactorCode"
+                    type="text"
+                    placeholder="6 chiffres"
+                    value={twoFactorCode}
+                    maxLength={6}
+                    minLength={6}
+                    required
+                    onChange={(e) => {
+                      setTwoFactorCode(e.target.value);
+                      // console.log("Code 2FA saisi :", e.target.value);
+                    }}
+                    className="h-9 w-32 text-sm"
+                  />
+                </div>
+              )}  
+
               <Link
                 to="/forgot-password"
                 className="text-sm text-cofrap-primary hover:text-cofrap-accent transition-colors"
