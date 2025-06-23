@@ -45,18 +45,24 @@ function Signin() {
             },
             body: JSON.stringify({ username: trimmedUsername }),
           });
-          console.log(response.status);
+          // console.log(response.status);
           if (!response.ok) {
             throw new Error("Erreur lors de la création du compte.");
           }
           
           const data = await response.json();
-          console.log(data);
+          // console.log(data);
 
-          console.log("Réponse de l'API :", data);
+          // console.log("Réponse de l'API :", data);
 
           // Sauvegarder le username avec majuscule pour l'utiliser plus tard
           localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
+
+          // Sauvegarder le QrCode pour récupérer mot de passe
+          localStorage.setItem("qr_code_base64", `data:image/png;base64,${data.qr_code_base64}`);
+
+          console.log("qr_code_base64", data.qr_code_base64);
+
 
           // Rediriger vers le dashboard
           navigate("/dashboard");
