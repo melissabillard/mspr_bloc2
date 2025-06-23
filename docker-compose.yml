@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  cofrap-front:
+    image: ritacarrilho/cofrap-front:latest
+    container_name: cofrap-front
+    ports:
+      - "8080:80"
+    restart: unless-stopped

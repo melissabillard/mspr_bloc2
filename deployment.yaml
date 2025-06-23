@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cofrap-front
+  labels:
+    app: cofrap-front
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cofrap-front
+  template:
+    metadata:
+      labels:
+        app: cofrap-front
+    spec:
+      containers:
+        - name: front
+          image: ritacarrilho/cofrap-front:latest
+          ports:
+            - containerPort: 80
+          env:
+            # If you prefer, inject API base URL here:
+            - name: REACT_APP_API_URL
+              value: "http://api.cofrap.local"

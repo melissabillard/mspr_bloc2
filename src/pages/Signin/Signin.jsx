@@ -38,19 +38,20 @@ function Signin() {
 
     if (trimmedUsername) {
         try {
-          const response = await fetch("http://192.168.64.4:30657/function/generate-password", {
+          const response = await fetch("http://api.cofrap.local/function/generate-password", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ username: trimmedUsername }),
           });
-
+          console.log(response.status);
           if (!response.ok) {
             throw new Error("Erreur lors de la création du compte.");
           }
-
+          
           const data = await response.json();
+          console.log(data);
 
           console.log("Réponse de l'API :", data);
 
