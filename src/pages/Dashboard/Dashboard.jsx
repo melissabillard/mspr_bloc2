@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import qrCodeImage from "../../assets/QRCode.png";
+// import qrCodeImage from "../../assets/QRCode.png";
 import logo from "../../assets/COFRAP_LOGO.png";
 
 /**
