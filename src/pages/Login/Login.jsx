@@ -28,7 +28,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  async function handleSubmit (e) {
     e.preventDefault();
     // if (username.trim() && password.trim()) {
     //   // Marquer l'utilisateur comme authentifié
@@ -43,20 +43,59 @@ function Login() {
     //   navigate("/home-authenticated");
     // }
 
-    if (username.trim() && password.trim() && twoFactorCode.trim()) {
-    // Marquer l'utilisateur comme authentifié
+    const isUsernameValid = username.trim() !== "";
+    const isPasswordValid = password.trim() !== "";
+    const is2FAValid = twoFactorCode.trim() !== "";
+
+    if (isUsernameValid && isPasswordValid && is2FAValid) {
+
+       try {
+        const response = await fetch("http://api.cofrap.local/function/verify-login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username.trim(),
+            password: password.trim(),
+             otp_code: twoFactorCode.trim(),
+          }),
+        });
+
+    if (!response.ok) {
+      throw new Error("Échec de l'authentification.");
+    }
+
+    const data = await response.json();
+
+    // Exemple : succès → marquer comme connecté
     localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
     localStorage.setItem("authenticated", "true");
-
     // Nettoyer les flags temporaires
     localStorage.removeItem("password_recovery");
 
-    // Redirection vers l'accueil connecté
+    console.log("Authentification réussie :", data);
+
     navigate("/home-authenticated");
 
-  } else {
-    alert("Veuillez remplir tous les champs, y compris le code 2FA.");
+  } catch (error) {
+    console.error("Erreur lors de la connexion :", error);
+    alert("Identifiants ou code 2FA incorrects.");
   }
+
+    // // Marquer l'utilisateur comme authentifié
+    // localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
+    // localStorage.setItem("authenticated", "true");
+
+    // // Nettoyer les flags temporaires
+    // localStorage.removeItem("password_recovery");
+
+    // // Redirection vers l'accueil connecté
+    // navigate("/home-authenticated");
+
+    } else {
+      alert("Veuillez remplir tous les champs, y compris le code 2FA.");
+    }
   };
 
   return (
