@@ -23,14 +23,19 @@ function Dashboard() {
   const [username, setUsername] = useState("");
   const [isPasswordRecovery, setIsPasswordRecovery] = useState(false);
   const [qrCodeSrc, setQrCodeSrc] = useState(""); 
+  const [code2FA, setCode2FA] = useState(""); 
 
 
   useEffect(() => {
     // Récupérer le username du localStorage
     const storedUsername = localStorage.getItem("username");
     const passwordRecovery = localStorage.getItem("password_recovery");
-    // Récupérer le qrcode du localStorage
+   
+    // Récupérer le qrcode mot de passe du localStorage
     const storedQrCode = localStorage.getItem("qr_code_base64"); // // déjà au format "data:image/png;base64,..."
+    
+    // Récupérer le qrcode 2FA du localStorage
+    const storedQr2FACode = localStorage.getItem("code_mfa"); // // déjà au format "data:image/png;base64,..."
 
     if (storedUsername) {
       setUsername(storedUsername);
@@ -39,6 +44,9 @@ function Dashboard() {
       // Si un QR code est stocké, on l'affiche
       if (storedQrCode) {
         setQrCodeSrc(storedQrCode);
+      }
+      if (storedQr2FACode) {
+        setCode2FA(storedQrCode);
       }
 
     } else {
@@ -77,17 +85,17 @@ function Dashboard() {
           </CardTitle>
           <CardDescription className="text-gray-600">
             {isPasswordRecovery
-              ? "Scannez le QR code pour recevoir votre nouveau mot de passe"
-              : "Scannez le QR code pour recevoir votre mot de passe"}
+              ? "Scannez le QR code pour découvrir votre nouveau mot de passe"
+              : "Scannez le QR code pour découvrir votre mot de passe"}
           </CardDescription>
         </CardHeader>
         <CardContent className="text-center space-y-6">
           {/* Message spécifique selon le contexte */}
           {isPasswordRecovery && (
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4">
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
               <div className="flex items-center justify-center">
                 <svg
-                  className="h-5 w-5 text-orange-400 mr-2"
+                  className="h-5 w-5 text-green-400 mr-2"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -97,24 +105,38 @@ function Dashboard() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <p className="text-sm text-orange-700 font-medium">
-                  Récupération de mot de passe en cours
+                <p className="text-sm text-green-700 font-medium">
+                  Mot de passe modifié.
                 </p>
               </div>
             </div>
           )}
 
-          {/* QR Code */}
+          {/* QR Code Mot de passe*/}
           <div className="flex justify-center">
             <div className="bg-white p-4 rounded-lg shadow-md">
               <img
                 src={qrCodeSrc}
-                alt="QR Code pour recevoir le mot de passe"
+                alt="QR Code pour afficher le mot de passe"
                 className="w-48 h-48 object-contain"
                 // onError={() => setQrCodeSrc(qrCodeImage)} // fallback automatique
               />
             </div>
           </div>
+          <span className="text-sm italic">Mot de passe</span>
+
+          {/* QR Code 2MFA*/}
+          <div className="flex justify-center">
+            <div className="bg-white p-4 rounded-lg shadow-md">
+              <img
+                src={code2FA}
+                alt="QR Code pour afficher le code 2FA"
+                className="w-48 h-48 object-contain"
+                // onError={() => setQrCodeSrc(qrCodeImage)} // fallback automatique
+              />
+            </div>
+          </div>
+          <span className="text-sm italic">Double authentification (2FA)</span>
 
           {/* Instructions */}
           <div className="space-y-2">

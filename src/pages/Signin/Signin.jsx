@@ -52,11 +52,16 @@ function Signin() {
           // Sauvegarder le username avec majuscule pour l'utiliser plus tard
           localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
 
-          // Stocker le Qrcode pour l'afficher
+          // Stocker le Qrcode mot de passe pour l'afficher
           const qrDataUrl = `data:image/png;base64,${data.qr_code_base64}`;
           localStorage.setItem("qr_code_base64", qrDataUrl);
 
-          // console.log("qr_code_base64:", data.qr_code_base64);
+          // Stocker le Qrcode 2FA pour l'afficher
+          const qr2FADataUrl = `data:image/png;base64,${data.code_mfa}`;
+          localStorage.setItem("code_mfa", qr2FADataUrl);
+
+          console.log("qr_code_base64:", data.qr_code_base64);
+          console.log("code_mfa:", data.code_mfa);
 
           // Rediriger vers le dashboard
           navigate("/dashboard");
