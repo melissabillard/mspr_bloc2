@@ -23,17 +23,39 @@ function ForgotPassword() {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  async function handleSubmit (e) {
     e.preventDefault();
-    if (username.trim()) {
-      // Sauvegarder le username avec majuscule et marquer comme récupération de mot de passe
-      localStorage.setItem(
-        "username",
-        username.charAt(0).toUpperCase() + username.slice(1)
-      );
-      localStorage.setItem("password_recovery", "true");
-      // Rediriger vers le dashboard pour un nouveau QR code
-      navigate("/dashboard");
+
+    const trimmedUsername = username.trim();
+
+    if (trimmedUsername) {
+        try {
+          const response = await fetch("http://api.cofrap.local/function/generate-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: trimmedUsername }),
+          });
+    
+        if (!response.ok) {
+          throw new Error("Erreur lors de la ré-initialisation du mot de passe.");
+        }
+    
+        const data = await response.json();
+    
+        // Sauvegarder le username avec majuscule et marquer comme récupération de mot de passe
+        localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
+        localStorage.setItem("password_recovery", "true");
+    
+        // Stocker le Qrcode pour l'afficher
+        const qrDataUrl = `data:image/png;base64,${data.qr_code_base64}`;
+        localStorage.setItem("qr_code_base64", qrDataUrl);
+        
+        // Rediriger vers le dashboard pour un nouveau QR code
+        navigate("/dashboard");
+      } catch (err) {
+        console.error("Erreur de récupération :", err);
+        alert("Une erreur est survenue. Veuillez réessayer plus tard.");
+      }
     }
   };
 

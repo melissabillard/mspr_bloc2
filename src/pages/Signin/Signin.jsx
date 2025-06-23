@@ -20,8 +20,8 @@ import logo from "../../assets/COFRAP_LOGO.png";
  */
 
 function Signin() {
-  const navigate = useNavigate();
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
 
   /**
    * Gère la soumission du formulaire d'inscription.
@@ -56,7 +56,7 @@ function Signin() {
           const qrDataUrl = `data:image/png;base64,${data.qr_code_base64}`;
           localStorage.setItem("qr_code_base64", qrDataUrl);
 
-          console.log("qr_code_base64:", data.qr_code_base64);
+          // console.log("qr_code_base64:", data.qr_code_base64);
 
           // Rediriger vers le dashboard
           navigate("/dashboard");
