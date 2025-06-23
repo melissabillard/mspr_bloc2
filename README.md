@@ -32,17 +32,17 @@ npm start
 npm run build
 ```
 
-### Tests
+### Tests Unitaires
 
 ```bash
 # Lancer tous les tests
 npm test
 
-# Lancer les tests avec coverage
-npm test -- --coverage --watchAll=false
+# Tests avec couverture de code
+npm run test:coverage
 
-# Ouvrir le rapport de coverage dans le navigateur
-start coverage/lcov-report/index.html
+# Tests spécifiques (App, HomePage, UIComponents, LoginPage)
+npm run test:unit
 ```
 
 ### Documentation
@@ -51,90 +51,62 @@ start coverage/lcov-report/index.html
 # Lancer Styleguidist (documentation des composants)
 npx styleguidist server
 # Accès sur http://localhost:6060
-
-# Générer la documentation statique
-npx styleguidist build
 ```
 
-## 🧪 Tests
+## 🧪 Tests Unitaires
 
-### Structure des Tests (5 fichiers - 33 tests)
+### ✅ Résultats
 
-| Fichier                     | Tests | Description                                                                    |
-| --------------------------- | ----- | ------------------------------------------------------------------------------ |
-| **Login.test.js**           | 5     | Tests du formulaire de connexion (validation, capitalisation, toggle password) |
-| **Dashboard.test.js**       | 7     | Tests du dashboard (modes normal/récupération, QR code, navigation)            |
-| **NavigationFlow.test.js**  | 8     | Tests d'intégration (flux complets, logique métier, contrôle d'accès)          |
-| **Utils.test.js**           | 8     | Tests utilitaires (localStorage, validation, capitalisation, performance)      |
-| **BasicComponents.test.js** | 5     | Tests de composants React (formulaires, listes, rendu conditionnel)            |
+- **71 tests** - 100% de réussite
+- **9 fichiers** de test
+- **Compatible React Router v7.6.1**
 
-### Lancer les Tests
+### 📊 Couverture de Code
 
-#### Tests simples
+| Dossier/Fichier       | Couverture | Statut |
+| --------------------- | ---------- | ------ |
+| **src/components/ui** | **100%**   | ✅     |
+| **src/pages/Login**   | **100%**   | ✅     |
+| **src/lib/utils.js**  | **100%**   | ✅     |
+| **src/App.jsx**       | **100%**   | ✅     |
+| **Global**            | **37.3%**  | 📈     |
+
+### 🔧 Commandes
 
 ```bash
-npm test
+# Tests de base
+npm test                    # Mode watch
+npm run test:unit          # Tests principaux
+
+# Avec couverture
+npm run test:coverage      # Rapport complet
+# Ouvrir: coverage/lcov-report/index.html
 ```
 
-#### Tests avec rapport de coverage
-
-```bash
-# Générer le coverage
-npm test -- --coverage --watchAll=false
-
-# Ouvrir le rapport HTML dans le navigateur
-start coverage/lcov-report/index.html
-```
-
-### Interprétation du Coverage
-
-⚠️ **Note importante** : Le coverage actuel est à 0% car nos tests utilisent des **composants simplifiés** plutôt que les vrais composants de l'application. C'est un choix délibéré pour éviter les problèmes de mocking complexe avec `react-router-dom`.
-
-**Avantages de cette approche :**
-
-- ✅ Tests rapides et stables (~8 secondes pour 33 tests)
-- ✅ Pas de dépendances complexes à maintenir
-- ✅ Focus sur la logique métier critique
-- ✅ Facilement maintenables et extensibles
-
-**Le coverage HTML vous permet de :**
-
-- 📊 Voir les métriques par fichier (Statements, Branches, Functions, Lines)
-- 🔍 Naviguer dans le code source coloré
-- 📈 Identifier les parties non testées (rouge) vs testées (vert)
-
-## 🏗️ Architecture de l'Application
+## 🏗️ Architecture
 
 ### Pages Principales
 
-- **Homepage** (`/`) - Page d'accueil avec header/footer
-- **Login** (`/login`) - Connexion utilisateur
-- **Signin** (`/signin`) - Inscription utilisateur
-- **Dashboard** (`/dashboard`) - Affichage QR code post-inscription
-- **ForgotPassword** (`/forgot-password`) - Récupération mot de passe
-- **AuthenticatedHome** (`/home-authenticated`) - Page utilisateur connecté
+- **Homepage** (`/`) - Page d'accueil
+- **Login** (`/login`) - Connexion
+- **Signin** (`/signin`) - Inscription
+- **Dashboard** (`/dashboard`) - QR code
+- **ForgotPassword** (`/forgot-password`) - Récupération
+- **AuthenticatedHome** (`/home-authenticated`) - Page utilisateur
 
 ### Flux d'Authentification
 
-1. **Inscription** : Username → Dashboard (QR code) → Login
+1. **Inscription** : Username → QR code → Login
 2. **Connexion** : Username + Password → Page authentifiée
-3. **Récupération** : Username → Dashboard (mode recovery) → Login
-4. **Déconnexion** : Clear localStorage → Redirect homepage
+3. **Récupération** : Username → QR code → Login
 
-### Gestion des Layouts
-
-- **Avec Header/Footer** : Homepage uniquement
-- **Sans Layout** : Pages de formulaires (login, signin, forgot-password, dashboard)
-- **Layout Custom** : Page authentifiée (header avec logout)
-
-## 🛠️ Technologies Utilisées
+## 🛠️ Technologies
 
 - **React 19** - Framework principal
-- **React Router** - Navigation SPA
-- **Tailwind CSS** - Styling moderne
-- **Lucide React** - Icônes
+- **React Router v7** - Navigation
+- **Tailwind CSS** - Styling
 - **Jest & React Testing Library** - Tests
-- **LocalStorage** - Gestion session
+- **Lucide React** - Icônes
 
 ## 🎨 Composants UI
 
@@ -145,67 +117,52 @@ start coverage/lcov-report/index.html
 - `Card` - Cartes de contenu
 - `Label` - Labels de formulaire
 - `Avatar` - Avatars utilisateur
+- `Badge` - Badges de statut
 
 ### Composants Métier
 
 - `Header` - En-tête avec navigation
 - `Footer` - Pied de page
-- `Hero` - Section héros homepage
-- `Features` - Section fonctionnalités
+- `Hero` - Section héros
+- `Features` - Fonctionnalités
 - `CTA` - Call-to-action
 
-## 📱 Fonctionnalités MSPR
+## 📱 Fonctionnalités
 
-### Authentification Simplifiée
+### Authentification
 
 - ✅ Inscription avec username uniquement
 - ✅ QR code pour réception mot de passe
-- ✅ Système de récupération mot de passe
-- ✅ Capitalisation automatique usernames
+- ✅ Système de récupération
+- ✅ Capitalisation automatique
 
-### UX/UI Moderne
+### UX/UI
 
-- ✅ Design responsive Tailwind CSS
-- ✅ Animations et transitions fluides
-- ✅ Effets hover sur logo et boutons
-- ✅ Thème couleurs COFRAP
+- ✅ Design responsive
+- ✅ Animations fluides
+- ✅ Thème COFRAP
 
 ## 🔧 Configuration
 
-### Variables d'Environnement
+### LocalStorage
 
-Aucune variable d'environnement requise pour le développement local.
-
-### LocalStorage Keys
-
-- `username` - Nom d'utilisateur (capitalisé)
-- `authenticated` - État de connexion ("true"/"false")
-- `password_recovery` - Mode récupération ("true"/"false")
+- `username` - Nom d'utilisateur
+- `authenticated` - État de connexion
+- `password_recovery` - Mode récupération
 
 ## 📦 Déploiement
 
 ```bash
-# Build de production
 npm run build
-
-# Le dossier build/ contient les fichiers optimisés
-# Déployable sur tout serveur web statique
+# Déployer le dossier build/
 ```
 
 ## 🤝 Contribution
 
 1. Fork le projet
-2. Créer une branche (`git checkout -b feature/nouvelle-fonctionnalite`)
-3. Commit les changements (`git commit -m 'Ajout nouvelle fonctionnalité'`)
-4. Push la branche (`git push origin feature/nouvelle-fonctionnalite`)
-5. Ouvrir une Pull Request
-
-## 📞 Support
-
-Pour toute question ou problème :
-
-- Ouvrir une issue sur le repository
-- Contacter l'équipe de développement
+2. Créer une branche feature
+3. Commit les changements
+4. Push et ouvrir une PR
 
 ---
 

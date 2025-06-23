@@ -28,6 +28,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watchAll=false --coverageReporters=html --coverageReporters=text",
+    "test:coverage-specific": "react-scripts test --testPathPattern=\"LoginPage.test.js|HomePage.test.js|UIComponents.test.js|App.test.js\" --coverage --watchAll=false --coverageReporters=html --coverageReporters=text",
+    "test:unit": "react-scripts test --testPathPattern=\"LoginPage.test.js|HomePage.test.js|UIComponents.test.js|App.test.js\" --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

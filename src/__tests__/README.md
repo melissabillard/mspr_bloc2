@@ -1,275 +1,177 @@
-# Tests Unitaires et d'Intégration - COFRAP
+# 🧪 Tests COFRAP - Guide Technique
 
-## 📋 Vue d'ensemble
+## 📊 Vue d'Ensemble
 
-Cette suite de tests couvre l'application COFRAP avec différents types de tests :
+- **71 tests** ✅ (100% réussite)
+- **9 fichiers** de test
+- **React Router v7.6.1** compatible
+- **Couverture 100%** sur `src/components/ui`
 
-- **Tests unitaires** : Composants individuels
-- **Tests d'intégration** : Flux de navigation complets
-- **Tests utilitaires** : Fonctions helpers et localStorage
-
-## 🧪 Types de Tests Créés
-
-### 1. **Tests Unitaires - Login Component** (`src/pages/Login/__tests__/Login.test.js`)
-
-**Objectif** : Tester le composant Login de manière isolée
-
-**Tests inclus** :
-
-- ✅ **Rendu du composant** : Vérification de tous les éléments UI
-- ✅ **Toggle mot de passe** : Fonction show/hide password
-- ✅ **Validation des champs vides** : Empêche soumission sans données
-- ✅ **Soumission avec données valides** : Sauvegarde et navigation
-- ✅ **Logo cliquable** : Navigation vers accueil
-- ✅ **Capitalisation du username** : Première lettre en majuscule
-
-**Couverture** :
-
-- Interface utilisateur
-- Logique de validation
-- Navigation
-- LocalStorage
-
-### 2. **Tests d'Intégration - Navigation Flow** (`src/__tests__/NavigationFlow.test.js`)
-
-**Objectif** : Tester les flux complets de navigation entre pages
-
-**Tests inclus** :
-
-- ✅ **Inscription complète** : Accueil → Inscription → Dashboard
-- ✅ **Connexion réussie** : Accueil → Login → Page connectée
-- ✅ **Connexion échouée** : Reste sur page login si champs vides
-- ✅ **Récupération mot de passe** : Login → Forgot → Dashboard (recovery)
-- ✅ **Déconnexion** : Page connectée → Accueil + nettoyage
-- ✅ **Protection des routes** : Accès non autorisé
-
-**Couverture** :
-
-- Flux utilisateur complets
-- Navigation entre composants
-- États d'authentification
-- Gestion des sessions
-
-### 3. **Tests Unitaires - Dashboard Component** (`src/pages/Dashboard/__tests__/Dashboard.test.js`)
-
-**Objectif** : Tester le composant Dashboard avec ses différents états
-
-**Tests inclus** :
-
-- ✅ **Redirection sans username** : Protection de la route
-- ✅ **Affichage inscription** : Mode normal après inscription
-- ✅ **Affichage récupération** : Mode récupération de mot de passe
-- ✅ **QR Code présent** : Vérification de l'image
-- ✅ **Bouton Se connecter** : Navigation et nettoyage des flags
-- ✅ **Instructions personnalisées** : Affichage du username
-- ✅ **Logo cliquable** : Retour à l'accueil
-- ✅ **États contextuels** : Différenciation inscription/récupération
-
-**Couverture** :
-
-- Logique conditionnelle
-- Gestion d'état
-- Props et localStorage
-- Navigation
-
-### 4. **Tests Utilitaires** (`src/__tests__/Utils.test.js`)
-
-**Objectif** : Tester les fonctions utilitaires et helpers
-
-**Tests inclus** :
-
-- ✅ **Capitalisation username** : Fonction de formatage
-- ✅ **Opérations localStorage** : CRUD operations
-- ✅ **États d'authentification** : Validation des conditions
-- ✅ **États récupération** : Gestion des flags
-- ✅ **Nettoyage données** : Fonction de logout
-- ✅ **Validation formulaires** : Rules de validation
-- ✅ **Gestion d'erreurs** : Cas limites et null values
-- ✅ **Performance** : Tests de rapidité
-
-**Couverture** :
-
-- Fonctions utilitaires
-- Gestion d'erreurs
-- Performance
-- Edge cases
-
-## 🚀 Comment Lancer les Tests
-
-### Lancer tous les tests
+## 🚀 Commandes
 
 ```bash
-npm test
+# Tests de base
+npm test                           # Mode watch
+npm test -- --watchAll=false      # Une fois
+
+# Tests avec couverture
+npm run test:coverage              # Couverture complète
+npm run test:unit                  # Tests principaux
+
+# Test spécifique
+npm test -- --testPathPattern="UIComponents"
 ```
 
-### Lancer un fichier de test spécifique
+## 📁 Structure
 
-```bash
-npm test Login.test.js
-npm test NavigationFlow.test.js
-npm test Dashboard.test.js
-npm test Utils.test.js
+```
+src/__tests__/
+├── App.test.js                 # 3 tests - App + React Router
+├── HomePage.test.js            # 3 tests - Page accueil
+├── UIComponents.test.js        # 23 tests - Composants UI
+├── LoginPage.test.js           # 9 tests - Formulaire login
+├── BasicComponents.test.js     # 5 tests - Composants de base
+├── Utils.test.js               # 8 tests - Utilitaires
+├── NavigationFlow.test.js      # 8 tests - Flux navigation
+├── Dashboard.test.js           # 7 tests - Dashboard QR
+└── Login.test.js               # 5 tests - Composant Login
 ```
 
-### Lancer avec couverture de code
+## 🔧 Configuration React Router v7
 
-```bash
-npm test -- --coverage
+### Problème Résolu
+
+```
+Cannot find module 'react-router/dom' from 'node_modules/react-router-dom/dist/index.js'
 ```
 
-### Mode watch (relancement automatique)
+### Solution
 
-```bash
-npm test -- --watch
-```
-
-## 📊 Types de Tests Expliqués
-
-### **Tests Unitaires**
-
-- **Définition** : Testent une unité de code isolément (composant, fonction)
-- **Avantages** : Rapides, précis, faciles à déboguer
-- **Exemple** : Tester que le bouton Login appelle la bonne fonction
-
-### **Tests d'Intégration**
-
-- **Définition** : Testent l'interaction entre plusieurs composants
-- **Avantages** : Détectent les problèmes de communication
-- **Exemple** : Tester le flux complet inscription → dashboard → connexion
-
-### **Tests Fonctionnels**
-
-- **Définition** : Testent des fonctionnalités complètes du point de vue utilisateur
-- **Avantages** : Simulent l'usage réel
-- **Exemple** : "En tant qu'utilisateur, je peux me connecter avec succès"
-
-## 🛠 Outils Utilisés
-
-### **Jest**
-
-- Framework de test JavaScript
-- Intégré avec Create React App
-- Assertions, mocks, coverage
-
-### **React Testing Library**
-
-- Bibliothèque pour tester les composants React
-- Approche centrée utilisateur
-- Queries basées sur l'accessibilité
-
-### **Mocks**
-
-- `useNavigate` : Simulation de la navigation
-- Assets (images) : Éviter les erreurs d'import
-- localStorage : Environnement de test isolé
-
-## 🎯 Bonnes Pratiques Appliquées
-
-### **AAA Pattern (Arrange, Act, Assert)**
+**Mock complet dans chaque fichier de test :**
 
 ```javascript
-test("should handle login correctly", () => {
-  // Arrange - Préparer les données et l'environnement
-  render(<Login />);
-  const input = screen.getByPlaceholderText("Username");
-
-  // Act - Exécuter l'action à tester
-  fireEvent.change(input, { target: { value: "john" } });
-  fireEvent.click(screen.getByRole("button"));
-
-  // Assert - Vérifier le résultat
-  expect(localStorage.getItem("username")).toBe("John");
-});
+jest.mock("react-router-dom", () => ({
+  BrowserRouter: ({ children }) => (
+    <div data-testid="browser-router">{children}</div>
+  ),
+  useNavigate: () => jest.fn(),
+  useLocation: () => ({ pathname: "/", search: "", hash: "", state: null }),
+  // ... autres mocks
+}));
 ```
 
-### **Isolation des Tests**
-
-- `beforeEach()` : Nettoyage avant chaque test
-- Mocks resetés : État propre pour chaque test
-- localStorage.clear() : Pas d'interférence
-
-### **Tests Descriptifs**
-
-- Noms explicites : `should redirect to dashboard on successful login`
-- Commentaires : Explication de la logique complexe
-- Groupage logique : `describe()` blocks
-
-### **Couverture Complète**
-
-- **Happy path** : Cas nominal de fonctionnement
-- **Error cases** : Gestion des erreurs
-- **Edge cases** : Cas limites (valeurs nulles, etc.)
-- **User interactions** : Clicks, saisies, navigation
-
-## 📈 Métriques de Qualité
-
-### **Couverture de Code**
-
-- **Statements** : Lignes de code exécutées
-- **Branches** : Conditions (if/else) testées
-- **Functions** : Fonctions appelées
-- **Lines** : Pourcentage de lignes couvertes
-
-### **Objectifs de Couverture**
-
-- ✅ **> 80%** pour les composants critiques
-- ✅ **> 90%** pour les fonctions utilitaires
-- ✅ **100%** pour la logique d'authentification
-
-## 🔍 Analyse des Tests Créés
-
-### **Test Critique : Connexion Échouée**
+**Wrapper universel :**
 
 ```javascript
-test("should handle failed login with empty fields", async () => {
-  // Simule le cas où l'utilisateur essaie de se connecter sans saisir de données
-  // VÉRIFIE : L'application ne plante pas et reste sur la page de connexion
-});
+const renderWithRouter = (component) => {
+  return render(<BrowserRouter>{component}</BrowserRouter>);
+};
 ```
 
-**Importance** : Évite les bugs de sécurité et améliore l'UX
-
-### **Test Critique : Flux d'Intégration**
+**Polyfills setupTests.js :**
 
 ```javascript
-test("should navigate from home to signup and create account", async () => {
-  // Teste le parcours complet d'un nouvel utilisateur
-  // VÉRIFIE : Toute la chaîne fonctionne de bout en bout
-});
+global.TextEncoder = require("util").TextEncoder;
+global.TextDecoder = require("util").TextDecoder;
 ```
 
-**Importance** : Détecte les régressions dans le flux principal
+## 📊 Couverture Détaillée
 
-## 🚨 Tests de Sécurité Inclus
+| Fichier               | Couverture | Tests |
+| --------------------- | ---------- | ----- |
+| **src/components/ui** | **100%**   | ✅    |
+| ├── avatar.jsx        | 100%       | 4     |
+| ├── badge.jsx         | 100%       | 4     |
+| ├── button.jsx        | 100%       | 7     |
+| ├── card.jsx          | 100%       | 3     |
+| ├── input.jsx         | 100%       | 4     |
+| └── label.jsx         | 100%       | 1     |
+| **src/pages/Login**   | **100%**   | 9     |
+| **src/lib/utils.js**  | **100%**   | 8     |
+| **src/App.jsx**       | **100%**   | 3     |
+| **Global**            | **37.3%**  | 71    |
 
-- **Validation des entrées** : Empêche injection de code
-- **Protection des routes** : Accès non autorisé
-- **Nettoyage des données** : Pas de fuite d'information
-- **États d'authentification** : Vérification stricte
+## 🎯 Tests par Composant
 
-## 📝 Maintenance des Tests
+### UIComponents.test.js (23 tests)
 
-### **Quand Mettre à Jour**
+**Button (7 tests)**
 
-- Nouveaux composants → Nouveaux tests
-- Modifications UI → Update des selectors
-- Nouvelle logique → Tests de couverture
-- Bugs trouvés → Tests de régression
+- Rendu par défaut ✅
+- Événements click ✅
+- Variantes (destructive, outline, etc.) ✅
+- Tailles (sm, lg, icon) ✅
+- État disabled ✅
+- Mode asChild ✅
 
-### **Signes d'un Bon Test**
+**Input (4 tests)**
 
-- ✅ Rapide à exécuter (< 100ms)
-- ✅ Déterministe (même résultat à chaque fois)
-- ✅ Indépendant (ne dépend pas d'autres tests)
-- ✅ Lisible (autre développeur comprend facilement)
+- Rendu et valeurs ✅
+- Types (text, password, email) ✅
+- État disabled ✅
 
-## 🎉 Conclusion
+**Avatar (4 tests)**
 
-Cette suite de tests garantit :
+- AvatarFallback ✅
+- AvatarImage ✅
+- Classes personnalisées ✅
 
-- **Fiabilité** : L'application fonctionne comme prévu
-- **Maintenance** : Détection rapide des régressions
-- **Confiance** : Déploiements sans stress
-- **Documentation** : Les tests documentent le comportement attendu
+**Badge (4 tests)**
 
-**Total : 25+ tests couvrant tous les aspects critiques de l'application COFRAP !** 🚀
+- Variantes ✅
+- Événements click ✅
+
+**Card (3 tests)**
+
+- Sous-composants complets ✅
+
+**Label (1 test)**
+
+- Association htmlFor ✅
+
+### LoginPage.test.js (9 tests)
+
+- Rendu formulaire ✅
+- Toggle mot de passe ✅
+- Champ 2FA ✅
+- Validation ✅
+- Connexion réussie ✅
+- Connexion échouée ✅
+- Navigation ✅
+
+## 🛠️ Mocks Principaux
+
+```javascript
+// localStorage
+const localStorageMock = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  removeItem: jest.fn(),
+};
+
+// fetch API
+global.fetch = jest.fn();
+
+// window.alert
+jest.spyOn(window, "alert").mockImplementation(() => {});
+```
+
+## 📈 Rapport HTML
+
+```bash
+npm run test:coverage
+# Ouvrir: coverage/lcov-report/index.html
+```
+
+## 🔍 Debug
+
+```bash
+# Test spécifique avec détails
+npm test -- --testNamePattern="Button renders"
+
+# Mode verbose
+npm test -- --verbose
+
+# Aide Jest
+npm test -- --help
+```
