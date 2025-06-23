@@ -67,7 +67,7 @@ function Signin() {
 
           if (mfaResponse.ok) {
             const mfaData = await mfaResponse.json();
-            const qr2FADataUrl = `data:image/png;base64,${mfaData.code_mfa || ""}`;
+            const qr2FADataUrl = `data:image/png;base64,${mfaData.code_mfa}`;
             localStorage.setItem("code_mfa", qr2FADataUrl);
             console.log("QR 2FA généré :", mfaData.code_mfa);
       

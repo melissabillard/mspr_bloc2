@@ -49,9 +49,32 @@ function ForgotPassword() {
         // Stocker le Qrcode pour l'afficher
         const qrDataUrl = `data:image/png;base64,${data.qr_code_base64}`;
         localStorage.setItem("qr_code_base64", qrDataUrl);
+
+        // Faire un 2e appel pour générer le nouveau QR code 2FA
+        const mfaResponse = await fetch("http://api.cofrap.local/function/generate-2fa", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: trimmedUsername }),
+        });
         
-        // Rediriger vers le dashboard pour un nouveau QR code
-        navigate("/dashboard");
+        if (mfaResponse.ok) {
+          const mfaData = await mfaResponse.json();
+          const qr2FADataUrl = `data:image/png;base64,${mfaData.code_mfa || ""}`;
+          localStorage.setItem("code_mfa", qr2FADataUrl);
+          console.log("QR 2FA généré :", mfaData.code_mfa);
+      
+          // Rediriger vers le dashboard
+          navigate("/dashboard");
+
+        } else {
+          console.warn("Impossible de générer le QR 2FA");
+           localStorage.removeItem("code_mfa");
+        }
+        // // Rediriger vers le dashboard pour un nouveau QR code
+        // navigate("/dashboard");
+
       } catch (err) {
         console.error("Erreur de récupération :", err);
         alert("Une erreur est survenue. Veuillez réessayer plus tard.");
