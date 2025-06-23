@@ -20,6 +20,5 @@ spec:
           ports:
             - containerPort: 80
           env:
-            # If you prefer, inject API base URL here:
             - name: REACT_APP_API_URL
               value: "http://api.cofrap.local"
