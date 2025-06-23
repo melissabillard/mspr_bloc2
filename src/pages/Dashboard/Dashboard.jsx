@@ -46,7 +46,7 @@ function Dashboard() {
         setQrCodeSrc(storedQrCode);
       }
       if (storedQr2FACode) {
-        setCode2FA(storedQrCode);
+        setCode2FA(storedQr2FACode);
       }
 
     } else {
