@@ -56,15 +56,28 @@ function Signin() {
           const qrDataUrl = `data:image/png;base64,${data.qr_code_base64}`;
           localStorage.setItem("qr_code_base64", qrDataUrl);
 
-          // Stocker le Qrcode 2FA pour l'afficher
-          const qr2FADataUrl = `data:image/png;base64,${data.code_mfa}`;
-          localStorage.setItem("code_mfa", qr2FADataUrl);
+          // Faire un 2e appel pour générer le QR code 2FA
+          const mfaResponse = await fetch("http://api.cofrap.local/function/generate-2fa", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username: trimmedUsername }),
+          });
 
-          console.log("qr_code_base64:", data.qr_code_base64);
-          console.log("code_mfa:", data.code_mfa);
+          if (mfaResponse.ok) {
+            const mfaData = await mfaResponse.json();
+            const qr2FADataUrl = `data:image/png;base64,${mfaData.code_mfa || ""}`;
+            localStorage.setItem("code_mfa", qr2FADataUrl);
+            console.log("QR 2FA généré :", mfaData.code_mfa);
+      
+            // Rediriger vers le dashboard
+            navigate("/dashboard");
 
-          // Rediriger vers le dashboard
-          navigate("/dashboard");
+          } else {
+            console.warn("Impossible de générer le QR 2FA");
+            localStorage.removeItem("code_mfa");
+          }
 
       } catch (error) {
           console.error("Erreur:", error);
