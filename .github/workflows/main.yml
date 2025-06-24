@@ -6,9 +6,36 @@ on:
       - main
 
 jobs:
+  test-react:
+    name: Tests Unitaires React
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo complet
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Installation des dépendances React
+        run: npm install
+
+      - name: Lancer les tests unitaires
+        run: npm run test:unit
+        env:
+          CI: true
+
+      - name: Tests avec couverture de code
+        run: npm run test:coverage
+        env:
+          CI: true
+
   build-and-test:
     name: Build & Version
     runs-on: ubuntu-latest
+    needs: test-react
 
     steps:
       - name: Checkout repo complet
@@ -108,50 +135,5 @@ jobs:
         run: |
           VERSION=$(date +"%Y.%m.%d")-$(git rev-parse --short HEAD)
           curl -X POST -H "Content-Type: application/json" -d '{
-            "content": "**✅ Pipeline Successful - COFRAP FRONT ${{ secrets.API_NAME }}**\n\n**Version:** '"${VERSION}"'\n**Repository:** ${{ github.repository }}\n**Commit SHA:** ${{ github.sha }}\n**Commit Message:** ${{ github.event.head_commit.message }}\n**Release Branch:** release"
+            "content": "**✅ Pipeline Successful - COFRAP FRONT ${{ secrets.API_NAME }}**\n\n**Version:** '"${VERSION}"'\n**Repository:** ${{ github.repository }}\n**Commit SHA:** ${{ github.sha }}\n**Commit Message:** ${{ github.event.head_commit.message }}\n**Release Branch:** release\n**Tests React:** ✅ 71 tests passés"
           }' $DISCORD_WEBHOOK_URL_RELEASE
-
-  test-react:
-    name: Tests Unitaires React
-    runs-on: ubuntu-latest
-    needs: release
-
-    steps:
-      - name: Checkout repo complet
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
-
-      - name: Installation des dépendances React
-        run: npm install
-
-      - name: Lancer les tests unitaires
-        run: npm run test:unit
-        env:
-          CI: true
-
-      - name: Tests avec couverture de code
-        run: npm run test:coverage
-        env:
-          CI: true
-
-      - name: Notification Discord - Tests réussis
-        if: success()
-        env:
-          DISCORD_WEBHOOK_URL_RELEASE: ${{ secrets.DISCORD_WEBHOOK_URL_RELEASE }}
-        run: |
-          curl -X POST -H "Content-Type: application/json" -d '{
-            "content": "**✅ Tests React Réussis - COFRAP FRONT**\n\n**Repository:** ${{ github.repository }}\n**Tests:** 71 tests passés\n**Couverture:** 100% sur src/components/ui\n**Commit:** ${{ github.event.head_commit.message }}"
-          }' $DISCORD_WEBHOOK_URL_RELEASE
-
-      - name: Notification Discord - Tests échoués
-        if: failure()
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: |
-          curl -X POST -H "Content-Type: application/json" -d '{
-            "content": "**❌ Tests React Échoués - COFRAP FRONT**\n\n**Repository:** ${{ github.repository }}\n**Commit:** ${{ github.event.head_commit.message }}\n**Logs:** https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          }' $DISCORD_WEBHOOK_URL

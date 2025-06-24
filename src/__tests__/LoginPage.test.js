@@ -186,29 +186,21 @@ describe("Login Page - Tests Réels", () => {
       screen.getByRole("button", { name: /se connecter/i })
     );
 
-    // Attendre que l'API soit appelée
-    await waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith(
-        "http://api.cofrap.local/function/verify-login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: "testuser",
-            password: "testpass",
-            otp_code: "123456",
-          }),
-        }
-      );
-    });
-
-    // Vérifier que le fetch a été appelé (l'authentification a réussi)
-    expect(fetch).toHaveBeenCalled();
-
-    // Note: Le localStorage peut ne pas être appelé à cause de l'erreur de navigation
-    // mais l'important est que l'authentification fonctionne
+    // Vérifier que le fetch a été appelé avec les bons paramètres
+    expect(fetch).toHaveBeenCalledWith(
+      "http://api.cofrap.local/function/verify-login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: "testuser",
+          password: "testpass",
+          otp_code: "123456",
+        }),
+      }
+    );
   });
 
   test("Login fails with invalid credentials", async () => {
