@@ -50,7 +50,7 @@ function Login() {
     if (isUsernameValid && isPasswordValid && is2FAValid) {
 
        try {
-        const response = await fetch("http://api.cofrap.local/function/verify-login", {
+        const response = await fetch("http://api.cofrap.local/function/authenticate-user", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
