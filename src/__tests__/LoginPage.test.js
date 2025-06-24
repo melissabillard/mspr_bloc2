@@ -188,7 +188,7 @@ describe("Login Page - Tests Réels", () => {
 
     // Vérifier que le fetch a été appelé avec les bons paramètres
     expect(fetch).toHaveBeenCalledWith(
-      "http://api.cofrap.local/function/verify-login",
+      "http://api.cofrap.local/function/authenticate-user",
       {
         method: "POST",
         headers: {
