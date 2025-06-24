@@ -53,6 +53,23 @@ npx styleguidist server
 # Accès sur http://localhost:6060
 ```
 
+## 🔄 CI/CD Automatisé
+
+### 🚀 Pipeline GitHub Actions
+
+À chaque push sur `main`, le workflow automatique :
+
+1. **🧪 Tests Unitaires** - 38 tests React (bloque si échec)
+2. **🏗️ Build & Version** - Construction et versioning
+3. **🚀 Deploy** - Déploiement automatique + notifications Discord
+
+### ✅ Tests Intégrés
+
+- **38 tests** exécutés automatiquement
+- **Couverture 100%** sur les fichiers testés
+- **Blocage** du déploiement si tests échouent
+- **Notifications Discord** sur succès/échec
+
 ## 🧪 Tests Unitaires
 
 ### ✅ Résultats
