@@ -62,28 +62,56 @@ function Login() {
           }),
         });
 
-    if (!response.ok) {
-      throw new Error("Échec de l'authentification.");
-    }
+    // if (!response.ok) {
+    //   throw new Error("Échec de l'authentification.");
+    // }
 
     const data = await response.json();
 
-    // Exemple : succès → marquer comme connecté
-    localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
-    localStorage.setItem("authenticated", "true");
-    // Nettoyer les flags temporaires
-    localStorage.removeItem("password_recovery");
+    console.log("status req.", data.status)
+    
+    // Gestion des statuts de réponse
+    switch (data.status) {
+      case 'success':
 
-    console.log("Authentification réussie :", data);
+        // Marquer l'utilisateur comme authentifié
+        localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
+        localStorage.setItem("authenticated", "true");
 
-    navigate("/home-authenticated");
+        // Nettoyer les flags temporaires
+        localStorage.removeItem("password_recovery");
+
+        // Redirection vers le dashboard
+        navigate("/home-authenticated");
+
+        break;
+
+      case 'expired':
+        alert('Mot de passe expiré. Merci de le réinitialiser.');
+        navigate("/reset-password");
+        break;
+
+      case 'auth_failed':
+        alert('Échec d\'authentification. Veuillez vérifier vos identifiants.');
+        break;
+
+      case 'error':
+        alert('Une erreur est survenue. Veuillez réessayer plus tard.');
+        break;
+
+      default:
+        alert('Statut inconnu. Merci de contacter le support.');
+        break;
+    }
+
+    // navigate("/home-authenticated");
 
   } catch (error) {
-    console.error("Erreur lors de la connexion :", error);
-    alert("Identifiants ou code 2FA incorrects.");
+    // console.error("Erreur lors de la connexion :", error);
+    alert('Impossible de contacter le serveur. Vérifiez votre connexion.');
   }
 
-    // // Marquer l'utilisateur comme authentifié
+    // Marquer l'utilisateur comme authentifié
     // localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
     // localStorage.setItem("authenticated", "true");
 
