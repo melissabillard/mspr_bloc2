@@ -69,9 +69,13 @@ function Login() {
     const data = await response.json();
 
     console.log("status req.", data.status)
-    
+
+    // Si 'status' n'existe pas dans la réponse, on considère que c'est un succès
+    const status = data.status || 'success';
+    console.log("status req. 2", status)
+
     // Gestion des statuts de réponse
-    switch (data.status) {
+    switch (status) {
       case 'success':
 
         // Marquer l'utilisateur comme authentifié
