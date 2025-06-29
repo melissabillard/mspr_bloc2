@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Users, Shield, Zap } from "lucide-react";
+import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 
 function Features() {
   return (

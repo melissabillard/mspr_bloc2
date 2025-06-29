@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { LogOut, User, Settings, Shield } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import {
   Card,
@@ -9,7 +10,6 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
-import { LogOut, User, Settings, Shield } from "lucide-react";
 import logo from "../../assets/COFRAP_LOGO.png";
 
 /**

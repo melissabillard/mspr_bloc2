@@ -45,6 +45,19 @@ npm run test:coverage
 npm run test:unit
 ```
 
+### Linting
+
+```bash
+# Vérifier la qualité du code
+npm run lint
+
+# Corriger automatiquement les erreurs
+npm run lint:fix
+
+# Vérification stricte (0 warnings)
+npm run lint:check
+```
+
 ### Documentation
 
 ```bash
@@ -59,9 +72,10 @@ npx styleguidist server
 
 À chaque push sur `main`, le workflow automatique :
 
-1. **🧪 Tests Unitaires** - 38 tests React (bloque si échec)
-2. **🏗️ Build & Version** - Construction et versioning
-3. **🚀 Deploy** - Déploiement automatique + notifications Discord
+1. **🔍 Linting ESLint** - Vérification qualité du code
+2. **🧪 Tests Unitaires** - 38 tests React (bloque si échec)
+3. **🏗️ Build & Version** - Construction et versioning
+4. **🚀 Deploy** - Déploiement automatique + notifications Discord
 
 ### ✅ Tests Intégrés
 

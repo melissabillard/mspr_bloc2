@@ -33,14 +33,14 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
-import Header from "./Header/Header";
-import Footer from "./Footer/Footer";
 import Login from "../pages/Login/Login";
 import Signin from "../pages/Signin/Signin";
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import AuthenticatedHome from "../pages/AuthenticatedHome/AuthenticatedHome";
+import Footer from "./Footer/Footer";
+import Header from "./Header/Header";
 
 // Composant pour gérer l'affichage conditionnel du Header et Footer
 function ConditionalLayout({ children }) {
