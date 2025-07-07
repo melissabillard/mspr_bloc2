@@ -1,12 +1,14 @@
-Page d’inscription de l’application **COFRAP**.
+Registration page of the COFRAP application.
 
-Permet à un nouvel utilisateur de créer un compte en renseignant son **email** et un **mot de passe**.  
-Les informations sont envoyées à l’API d’inscription.  
-En cas de succès :
-- le token JWT est stocké dans `localStorage`
-- l’utilisateur est redirigé vers la page d’accueil
+Allows a new user to create an account by entering their email and a password.
+The information is sent to the registration API.
+If successful:
 
-## Exemple
+- the JWT token is stored in `localStorage`
+
+- the user is redirected to the home page
+
+## Example of use
 
 ```jsx
 <Signin />

@@ -1,7 +1,7 @@
-Ce composant affiche le pied de page du site.  
-Il peut contenir des informations de contact, de copyright ou des liens utiles.
+This component displays the website footer.
+It may contain contact information, copyright details, or useful links.
 
-## Exemple d’utilisation
+## Example of use
 
 ```jsx
 <Footer />

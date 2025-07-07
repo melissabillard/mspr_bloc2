@@ -1,7 +1,7 @@
-Ce composant affiche l'en-tête du site.  
-Il est utilisé pour montrer un titre principal (par exemple, le nom de l'application ou de la page).
+This component displays the website header.
+It is used to show a main title (e.g., the name of the application or the page).
 
-## Exemple d’utilisation
+## Example of use
 
 ```jsx
 <Header />

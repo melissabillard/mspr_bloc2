@@ -1,12 +1,12 @@
 Login
 =====
 
-Page de connexion de l’application **COFRAP**.
+Login page of the COFRAP application.
 
-Permet à un utilisateur existant de se connecter via son **email** et son **mot de passe**.  
-Envoie les informations à l’API d’authentification, stocke le **token JWT** dans le `localStorage`, puis redirige vers la page d’accueil.
+Allows an existing user to log in using their email and password.
+Sends the information to the authentication API, stores the JWT token in localStorage, and then redirects to the home page.
 
-## Exemple
+## Example of use
 
 ```jsx
 <Login />

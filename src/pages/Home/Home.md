@@ -1,8 +1,8 @@
-Page d’accueil de l’application **COFRAP**.
+Home page of the COFRAP application.
 
-Elle affiche le logo de l’entreprise, un message de bienvenue et une courte description.
+It displays the company logo, a welcome message, and a short description.
 
-## Exemple
+## Example of use
 
 ```jsx
 <Home />
