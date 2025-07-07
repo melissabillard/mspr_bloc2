@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
 
-// Tests pour les fonctions utilitaires et LocalStorage
+// Tests for utility functions and LocalStorage
 describe("Utility Functions and LocalStorage - Tests Unitaires", () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  // Test 1: Fonction capitalisation du username
+// Test 1: Username capitalization function
   test("should capitalize username correctly", () => {
     const capitalizeUsername = (username) => {
       return username.charAt(0).toUpperCase() + username.slice(1);
@@ -19,30 +19,30 @@ describe("Utility Functions and LocalStorage - Tests Unitaires", () => {
     expect(capitalizeUsername("")).toBe("");
   });
 
-  // Test 2: Gestion du localStorage
+// Test 2: localStorage handling
   test("should handle localStorage operations correctly", () => {
-    // Test d'écriture
+    // Write test
     localStorage.setItem("username", "TestUser");
     localStorage.setItem("authenticated", "true");
     localStorage.setItem("password_recovery", "false");
 
-    // Test de lecture
+    // Reading test
     expect(localStorage.getItem("username")).toBe("TestUser");
     expect(localStorage.getItem("authenticated")).toBe("true");
     expect(localStorage.getItem("password_recovery")).toBe("false");
 
-    // Test de suppression individuelle
+    // Individual deletion test
     localStorage.removeItem("password_recovery");
     expect(localStorage.getItem("password_recovery")).toBeNull();
     expect(localStorage.getItem("username")).toBe("TestUser");
 
-    // Test de nettoyage complet
+    // Full cleanup test
     localStorage.clear();
     expect(localStorage.getItem("username")).toBeNull();
     expect(localStorage.getItem("authenticated")).toBeNull();
   });
 
-  // Test 3: Validation des états d'authentification
+  // Test 3: Authentication state validation
   test("should validate authentication states correctly", () => {
     const isAuthenticated = () => {
       const username = localStorage.getItem("username");
@@ -50,14 +50,14 @@ describe("Utility Functions and LocalStorage - Tests Unitaires", () => {
       return Boolean(username && authenticated === "true");
     };
 
-    // Non authentifié - aucune donnée
+    // Not authenticated – no data
     expect(isAuthenticated()).toBe(false);
 
-    // Non authentifié - username seulement
+    // Not authenticated – username only
     localStorage.setItem("username", "User");
     expect(isAuthenticated()).toBe(false);
 
-    // Non authentifié - authenticated seulement
+    // Not authenticated – authenticated flag only
     localStorage.clear();
     localStorage.setItem("authenticated", "true");
     expect(isAuthenticated()).toBe(false);
@@ -67,34 +67,34 @@ describe("Utility Functions and LocalStorage - Tests Unitaires", () => {
     localStorage.setItem("authenticated", "false");
     expect(isAuthenticated()).toBe(false);
 
-    // Authentifié - toutes conditions remplies
+    // Authenticated – all conditions met
     localStorage.setItem("authenticated", "true");
     expect(isAuthenticated()).toBe(true);
   });
 
-  // Test 4: Gestion des états de récupération de mot de passe
+  // Test 4: Password recovery state management
   test("should handle password recovery states correctly", () => {
     const isPasswordRecovery = () => {
       return localStorage.getItem("password_recovery") === "true";
     };
 
-    // Pas de récupération
+    // No recovery
     expect(isPasswordRecovery()).toBe(false);
 
-    // Récupération désactivée explicitement
+    // Recovery explicitly disabled
     localStorage.setItem("password_recovery", "false");
     expect(isPasswordRecovery()).toBe(false);
 
-    // Récupération activée
+    // Recovery enabled
     localStorage.setItem("password_recovery", "true");
     expect(isPasswordRecovery()).toBe(true);
 
-    // Nettoyage
+    // Clean
     localStorage.removeItem("password_recovery");
     expect(isPasswordRecovery()).toBe(false);
   });
 
-  // Test 5: Fonction de nettoyage des données utilisateur
+  // Test 5: User data cleanup function
   test("should clean user data correctly", () => {
     const cleanUserData = () => {
       localStorage.removeItem("username");
@@ -102,23 +102,23 @@ describe("Utility Functions and LocalStorage - Tests Unitaires", () => {
       localStorage.removeItem("password_recovery");
     };
 
-    // Préparer des données
+    // Prepare the data
     localStorage.setItem("username", "TestUser");
     localStorage.setItem("authenticated", "true");
     localStorage.setItem("password_recovery", "true");
     localStorage.setItem("other_data", "should_remain");
 
-    // Nettoyer
+    // Clean up
     cleanUserData();
 
-    // Vérifier le nettoyage
+    // Check the clean up
     expect(localStorage.getItem("username")).toBeNull();
     expect(localStorage.getItem("authenticated")).toBeNull();
     expect(localStorage.getItem("password_recovery")).toBeNull();
     expect(localStorage.getItem("other_data")).toBe("should_remain");
   });
 
-  // Test 6: Validation des formulaires
+  // Test 6: Form validation
   test("should validate form inputs correctly", () => {
     const validateLogin = (username, password) => {
       return username.trim() !== "" && password.trim() !== "";
@@ -128,7 +128,7 @@ describe("Utility Functions and LocalStorage - Tests Unitaires", () => {
       return username.trim() !== "";
     };
 
-    // Tests de connexion
+    // Test login
     expect(validateLogin("john", "password")).toBe(true);
     expect(validateLogin("", "password")).toBe(false);
     expect(validateLogin("john", "")).toBe(false);
@@ -136,16 +136,16 @@ describe("Utility Functions and LocalStorage - Tests Unitaires", () => {
     expect(validateLogin("  ", "password")).toBe(false);
     expect(validateLogin("john", "  ")).toBe(false);
 
-    // Tests d'inscription
+    // Test sign up
     expect(validateSignup("john")).toBe(true);
     expect(validateSignup("")).toBe(false);
     expect(validateSignup("  ")).toBe(false);
     expect(validateSignup("a")).toBe(true);
   });
 
-  // Test 7: Gestion des erreurs et cas limites
+  // Test 7: Error handling and edge cases
   test("should handle edge cases and errors", () => {
-    // Test avec valeurs nulles et undefined
+    // Test with null and undefined values
     const capitalizeUsername = (username) => {
       if (!username) return "";
       return username.charAt(0).toUpperCase() + username.slice(1);
@@ -155,13 +155,13 @@ describe("Utility Functions and LocalStorage - Tests Unitaires", () => {
     expect(capitalizeUsername(undefined)).toBe("");
     expect(capitalizeUsername("")).toBe("");
 
-    // Test avec localStorage indisponible (simulation)
+  // Test with unavailable localStorage (simulation)
     const originalLocalStorage = global.localStorage;
 
-    // Simuler localStorage indisponible
+  // Simulate unavailable localStorage
     delete global.localStorage;
 
-    // La fonction devrait gérer l'erreur gracieusement
+  // The function should handle the error gracefully
     const safeLocalStorageGet = (key) => {
       try {
         return localStorage?.getItem(key) || null;
@@ -172,15 +172,15 @@ describe("Utility Functions and LocalStorage - Tests Unitaires", () => {
 
     expect(safeLocalStorageGet("any_key")).toBeNull();
 
-    // Restaurer localStorage
+    // Restore localStorage
     global.localStorage = originalLocalStorage;
   });
 
-  // Test 8: Performance et optimisation
+    // Test 8: Performance and optimization
   test("should handle performance considerations", () => {
     const startTime = performance.now();
 
-    // Simuler de multiples opérations localStorage
+    // Simulate multiple localStorage operations
     for (let i = 0; i < 100; i++) {
       localStorage.setItem(`key_${i}`, `value_${i}`);
     }
@@ -196,7 +196,7 @@ describe("Utility Functions and LocalStorage - Tests Unitaires", () => {
     const endTime = performance.now();
     const duration = endTime - startTime;
 
-    // Les opérations localStorage devraient être rapides (< 100ms pour 300 opérations)
+    // localStorage operations should be fast (< 100ms for 300 operations)
     expect(duration).toBeLessThan(100);
   });
 });
