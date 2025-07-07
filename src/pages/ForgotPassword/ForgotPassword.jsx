@@ -13,10 +13,10 @@ import { Label } from "../../components/ui/label";
 import logo from "../../assets/COFRAP_LOGO.png";
 
 /**
- * Composant ForgotPassword - Page mot de passe oublié MSPR
- * Demande le username et redirige vers le dashboard pour un nouveau QR code
+ * ForgotPassword Component – MSPR forgot password page
+ * Asks for the username and redirects to the dashboard for a new QR code
  *
- * @returns {JSX.Element} Le formulaire de récupération de mot de passe.
+ * @returns {JSX.Element} The password recovery form.
  */
 
 function ForgotPassword() {
@@ -42,15 +42,15 @@ function ForgotPassword() {
     
         const data = await response.json();
     
-        // Sauvegarder le username avec majuscule et marquer comme récupération de mot de passe
+        // Save the username with an uppercase letter and mark as password recovery
         localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
         localStorage.setItem("password_recovery", "true");
     
-        // Stocker le Qrcode pour l'afficher
+        // Store the QR code to display it
         const qrDataUrl = `data:image/png;base64,${data.qr_code_base64}`;
         localStorage.setItem("qr_code_base64", qrDataUrl);
 
-        // Faire un 2e appel pour générer le nouveau QR code 2FA
+        // Make a second call to generate the new 2FA QR code
         const mfaResponse = await fetch("http://api.cofrap.local/function/generate-2fa", {
           method: "POST",
           headers: {
@@ -65,14 +65,13 @@ function ForgotPassword() {
           localStorage.setItem("code_mfa", qr2FADataUrl);
           console.log("QR 2FA généré :", mfaData.code_mfa);
       
-          // Rediriger vers le dashboard
+          // Redirect to the dashboard
           navigate("/dashboard");
 
         } else {
           console.warn("Impossible de générer le QR 2FA");
            localStorage.removeItem("code_mfa");
         }
-        // // Rediriger vers le dashboard pour un nouveau QR code
         // navigate("/dashboard");
 
       } catch (err) {
@@ -84,7 +83,7 @@ function ForgotPassword() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cofrap-light to-cofrap-secondary flex items-center justify-center p-4 pt-16">
-      {/* Bouton retour à l'accueil */}
+      {/* Back to home button */}
       <Link
         to="/"
         className="fixed top-4 left-4 flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:bg-white z-50"

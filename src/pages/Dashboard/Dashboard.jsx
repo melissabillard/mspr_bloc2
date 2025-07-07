@@ -12,10 +12,10 @@ import {
 import logo from "../../assets/COFRAP_LOGO.png";
 
 /**
- * Composant Dashboard - Page tableau de bord MSPR
- * Affiche le QR code pour recevoir le mot de passe et permet de se connecter
+ * Dashboard Component – MSPR dashboard page
+ * Displays the QR code to receive the password and allows the user to log in
  *
- * @returns {JSX.Element} La page dashboard avec QR code.
+ * @returns {JSX.Element} The dashboard page with QR code.
  */
 
 function Dashboard() {
@@ -27,21 +27,21 @@ function Dashboard() {
 
 
   useEffect(() => {
-    // Récupérer le username du localStorage
+    // Retrieve the username from localStorage
     const storedUsername = localStorage.getItem("username");
     const passwordRecovery = localStorage.getItem("password_recovery");
    
-    // Récupérer le qrcode mot de passe du localStorage
-    const storedQrCode = localStorage.getItem("qr_code_base64"); // // déjà au format "data:image/png;base64,..."
+    // Retrieve the QR code password from localStorage
+    const storedQrCode = localStorage.getItem("qr_code_base64"); // "data:image/png;base64,..."
     
-    // Récupérer le qrcode 2FA du localStorage
-    const storedQr2FACode = localStorage.getItem("code_mfa"); // // déjà au format "data:image/png;base64,..."
+    // Retrieve the 2FA QR code from localStorage
+    const storedQr2FACode = localStorage.getItem("code_mfa"); // "data:image/png;base64,..."
 
     if (storedUsername) {
       setUsername(storedUsername);
       setIsPasswordRecovery(passwordRecovery === "true");
       
-      // Si un QR code est stocké, on l'affiche
+     // If a QR code is stored, display it
       if (storedQrCode) {
         setQrCodeSrc(storedQrCode);
       }
@@ -50,20 +50,20 @@ function Dashboard() {
       }
 
     } else {
-      // Si pas de username, rediriger vers l'inscription
+      // If no username, redirect to registration
       navigate("/signin");
     }
   }, [navigate]);
 
   const handleGoToLogin = () => {
-    // Nettoyer le flag de récupération de mot de passe
+    // Clear the password recovery flag
     localStorage.removeItem("password_recovery");
     navigate("/login");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cofrap-light to-cofrap-secondary flex items-center justify-center p-4 pt-16">
-      {/* Bouton retour à l'accueil */}
+      {/* Back to home button */}
       <Link
         to="/"
         className="fixed top-4 left-4 flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:bg-white z-50"
@@ -90,7 +90,7 @@ function Dashboard() {
           </CardDescription>
         </CardHeader>
         <CardContent className="text-center space-y-6">
-          {/* Message spécifique selon le contexte */}
+          {/* Specific message depending on the context */}
           {/* {isPasswordRecovery && (
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
               <div className="flex items-center justify-center">
@@ -112,7 +112,7 @@ function Dashboard() {
             </div>
           )} */}
 
-          {/* QR Code Mot de passe*/}
+          {/* QR code password*/}
           <div className="flex justify-center">
             <div className="bg-white p-4 rounded-lg shadow-md">
               <img
@@ -150,7 +150,7 @@ function Dashboard() {
             </p>
           </div>
 
-          {/* Bouton de connexion */}
+          {/* Login button */}
           <div className="pt-4">
             <Button
               onClick={handleGoToLogin}
@@ -160,7 +160,7 @@ function Dashboard() {
             </Button>
           </div>
 
-          {/* Informations supplémentaires */}
+          {/* Additional information */}
           <div className="text-xs text-gray-500 pt-4">
             <p>Une fois votre mot de passe reçu, cliquez sur "Se connecter"</p>
             <p>

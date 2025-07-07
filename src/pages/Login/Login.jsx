@@ -14,10 +14,10 @@ import { Label } from "../../components/ui/label";
 import logo from "../../assets/COFRAP_LOGO.png";
 
 /**
- * Composant Login - Page de connexion moderne MSPR
- * Utilise username et password selon les spécifications du projet
+ * Login Component – Modern MSPR login page
+ * Uses username and password according to the project specifications
  *
- * @returns {JSX.Element} Le formulaire de connexion moderne.
+ * @returns {JSX.Element} The modern login form.
  */
 
 function Login() {
@@ -68,10 +68,10 @@ function Login() {
 
     const data = await response.json();
 
-    // Exemple : succès → marquer comme connecté
+    // Example: success → mark as logged in
     localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
     localStorage.setItem("authenticated", "true");
-    // Nettoyer les flags temporaires
+    // Clean up the flags
     localStorage.removeItem("password_recovery");
 
     // console.log("Authentification réussie :", data);
@@ -83,14 +83,11 @@ function Login() {
     alert("Identifiants ou code 2FA incorrects.");
   }
 
-    // // Marquer l'utilisateur comme authentifié
     // localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
     // localStorage.setItem("authenticated", "true");
 
-    // // Nettoyer les flags temporaires
     // localStorage.removeItem("password_recovery");
 
-    // // Redirection vers l'accueil connecté
     // navigate("/home-authenticated");
 
     } else {
@@ -100,7 +97,7 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cofrap-light to-cofrap-secondary flex items-center justify-center p-4 pt-16">
-      {/* Bouton retour à l'accueil */}
+      {/* Back to home button */}
       <Link
         to="/"
         className="fixed top-4 left-4 flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:bg-white z-50"
@@ -188,7 +185,7 @@ function Login() {
                 </Label> 
               </div> */}
 
-              {/* Champ 2FA à gauche si username + password remplis */}
+              {/* 2FA field on the left if username + password are filled */}
               {username.trim() && password.trim() && (
                 <div className="flex flex-col">
                   <Label

@@ -13,22 +13,24 @@ import { Label } from "../../components/ui/label";
 import logo from "../../assets/COFRAP_LOGO.png";
 
 /**
- * Composant Signin - Page d'inscription simplifiée MSPR
- * L'utilisateur renseigne juste son username et est redirigé vers le dashboard
+ * Signin Component – Simplified MSPR registration page
+ * The user only enters their username and is redirected to the dashboard
  *
- * @returns {JSX.Element} Le formulaire d'inscription simplifié.
+ * @returns {JSX.Element} The simplified registration form.
  */
+
 
 function Signin() {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
-  /**
-   * Gère la soumission du formulaire d'inscription.
-   * Redirige vers le dashboard après validation du username.
-   *
-   * @param {React.FormEvent<HTMLFormElement>} e - L'événement de soumission du formulaire.
-   */
+/**
+ * Handles the submission of the registration form.
+ * Redirects to the dashboard after validating the username.
+ *
+ * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
+ */
+
   async function handleSignup(e) {
     e.preventDefault();
 
@@ -49,14 +51,14 @@ function Signin() {
           
           const data = await response.json();
 
-          // Sauvegarder le username avec majuscule pour l'utiliser plus tard
+          // Save the username with an uppercase letter to use later
           localStorage.setItem("username", username.charAt(0).toUpperCase() + username.slice(1));
 
-          // Stocker le Qrcode mot de passe pour l'afficher
+          // Store the QR code password to display it
           const qrDataUrl = `data:image/png;base64,${data.qr_code_base64}`;
           localStorage.setItem("qr_code_base64", qrDataUrl);
 
-          // Faire un 2e appel pour générer le QR code 2FA
+          // Make a second call to generate the 2FA QR code
           const mfaResponse = await fetch("http://api.cofrap.local/function/generate-2fa", {
             method: "POST",
             headers: {
@@ -71,7 +73,7 @@ function Signin() {
             localStorage.setItem("code_mfa", qr2FADataUrl);
             console.log("QR 2FA généré :", mfaData.code_mfa);
       
-            // Rediriger vers le dashboard
+            // Redirect to the dashboard
             navigate("/dashboard");
 
           } else {
@@ -89,7 +91,7 @@ function Signin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cofrap-light to-cofrap-secondary flex items-center justify-center p-4 pt-16">
-      {/* Bouton retour à l'accueil */}
+      {/* Back to home button */}
       <Link 
         to="/" 
         className="fixed top-4 left-4 flex items-center space-x-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:bg-white z-50"

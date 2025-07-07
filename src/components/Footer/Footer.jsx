@@ -2,15 +2,16 @@ import React from "react";
 import logo from "../../assets/COFRAP_LOGO.png";
 
 /**
- * Composant de pied de page
+ * Footer component
  *
- * Affiche des informations légales ou de contact en bas de page.
+ * Displays legal or contact information at the bottom of the page.
  *
- * Exemple :
+ * Example:
  * ```jsx
  * <Footer />
  * ```
  */
+
 
 function Footer() {
   return (

@@ -13,11 +13,12 @@ import { Badge } from "../../components/ui/badge";
 import logo from "../../assets/COFRAP_LOGO.png";
 
 /**
- * Composant AuthenticatedHome - Page d'accueil pour utilisateurs connectés
- * Interface personnalisée avec fonctionnalités utilisateur et déconnexion
+ * AuthenticatedHome Component – Home page for logged-in users
+ * Customized interface with user features and logout option
  *
- * @returns {JSX.Element} La page d'accueil pour utilisateurs authentifiés.
+ * @returns {JSX.Element} The home page for authenticated users.
  */
+
 
 function AuthenticatedHome() {
   const navigate = useNavigate();
@@ -30,33 +31,31 @@ function AuthenticatedHome() {
     if (storedUsername && isAuthenticated === "true") {
       setUsername(storedUsername);
     } else {
-      // Si pas authentifié, rediriger vers la page de connexion
+      // If not authenticated, redirect to the login page
       navigate("/login");
     }
   }, [navigate]);
 
   const handleLogout = () => {
-    // Nettoyer toutes les données utilisateur
+    // Clear all user data
     localStorage.removeItem("username");
     localStorage.removeItem("authenticated");
     localStorage.removeItem("password_recovery");
-    // Rediriger vers la page d'accueil
+    // Redirect to the home page
     navigate("/");
   };
 
   const handleProfile = () => {
-    // TODO: Rediriger vers page de profil
     console.log("Redirection vers profil");
   };
 
   const handleSettings = () => {
-    // TODO: Rediriger vers paramètres
     console.log("Redirection vers paramètres");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cofrap-light to-cofrap-secondary">
-      {/* Header personnalisé */}
+      {/* Custom Header */}
       <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -99,7 +98,7 @@ function AuthenticatedHome() {
         </div>
       </header>
 
-      {/* Contenu principal */}
+      {/* Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-cofrap-text mb-2">
@@ -110,7 +109,7 @@ function AuthenticatedHome() {
           </p>
         </div>
 
-        {/* Cartes d'action */}
+        {/* Action cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card
             className="border-0 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
@@ -162,7 +161,7 @@ function AuthenticatedHome() {
           </Card>
         </div>
 
-        {/* Section statistiques rapides */}
+        {/* Quick stats section */}
         <div className="mt-12">
           <Card className="border-0 shadow-lg">
             <CardHeader>
