@@ -15,7 +15,7 @@ import {
   CardFooter,
 } from "../components/ui/card";
 
-// Mock de la fonction cn pour les tests
+// Mock of the cn function for testing
 jest.mock("../lib/utils", () => ({
   cn: (...classes) => classes.filter(Boolean).join(" "),
 }));
@@ -76,7 +76,7 @@ jest.mock("react-router-dom", () => ({
   ),
 }));
 
-// Wrapper pour fournir le contexte Router
+// Wrapper to provide the Router context
 const renderWithRouter = (component) => {
   return render(<BrowserRouter>{component}</BrowserRouter>);
 };
@@ -184,7 +184,7 @@ describe("UI Components - Tests Réels", () => {
 
       const input = screen.getByPlaceholderText(/enter text/i);
       expect(input).toBeInTheDocument();
-      // Le type par défaut est "text" mais peut ne pas être explicitement défini
+      // The default type is "text" but it may not be explicitly defined
       expect(input.type === "text" || input.type === undefined).toBeTruthy();
     });
 
@@ -344,7 +344,7 @@ describe("UI Components - Tests Réels", () => {
         </Avatar>
       );
 
-      // L'image peut ne pas être visible à cause de Radix UI, testons juste que le composant existe
+      // The image may not be visible due to Radix UI, so just test that the component exists
       const avatar = screen.getByText("JD").closest("span").parentElement;
       expect(avatar).toBeInTheDocument();
     });
@@ -367,7 +367,7 @@ describe("UI Components - Tests Réels", () => {
         </Avatar>
       );
 
-      // Tester que l'Avatar parent a la classe custom
+      // Test that the parent Avatar has the custom class
       const avatarContainer = screen
         .getByText("JD")
         .closest("span").parentElement;
