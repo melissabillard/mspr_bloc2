@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import App from "../App";
 
-// Mock react-router-dom COMPLETEMENT pour React Router v7
+// Mock react-router-dom COMPLETELY for React Router v7
 jest.mock("react-router-dom", () => ({
   BrowserRouter: ({ children }) => (
     <div data-testid="browser-router">{children}</div>
@@ -57,17 +57,17 @@ jest.mock("react-router-dom", () => ({
   ),
 }));
 
-// Import BrowserRouter après le mock
+// Import BrowserRouter after the mock
 const { BrowserRouter } = require("react-router-dom");
 
-// Mock du composant Markup pour isoler les tests de l'App
+// Mock the Markup component to isolate the App tests
 jest.mock("../components/markup", () => {
   return function MockMarkup() {
     return <div data-testid="markup-component">Markup Component</div>;
   };
 });
 
-// Wrapper pour fournir le contexte Router
+// Wrapper to provide Router context
 const renderWithRouter = (component) => {
   return render(<BrowserRouter>{component}</BrowserRouter>);
 };
@@ -76,7 +76,7 @@ describe("App Component - Tests Réels", () => {
   test("App renders correctly with Markup component", () => {
     renderWithRouter(<App />);
 
-    // Vérifier que l'App rend le composant Markup
+    // Check that the App renders the Markup component
     expect(screen.getByTestId("markup-component")).toBeInTheDocument();
     expect(screen.getByText("Markup Component")).toBeInTheDocument();
   });
@@ -84,14 +84,14 @@ describe("App Component - Tests Réels", () => {
   test("App has correct CSS import", () => {
     const { container } = renderWithRouter(<App />);
 
-    // Vérifier que l'App est rendu
+    // Check that the App is rendered
     expect(container.firstChild).toBeInTheDocument();
   });
 
   test("App structure is correct", () => {
     const { container } = renderWithRouter(<App />);
 
-    // Vérifier la structure DOM de base
+    // Verify DOM base structure
     expect(container.firstChild).toBeInTheDocument();
     expect(screen.getByTestId("markup-component")).toBeInTheDocument();
   });

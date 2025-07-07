@@ -1,13 +1,13 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 
-// Tests de composants de base sans mocking complexe
+// Basic component testing without complex mocking
 describe("Basic Components Tests", () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  // Test d'un composant de formulaire simple
+  // Testing a simple form component
   test("should render a basic login form", () => {
     const SimpleLoginForm = () => {
       const [username, setUsername] = React.useState("");
@@ -45,7 +45,7 @@ describe("Basic Components Tests", () => {
     ).toBeInTheDocument();
   });
 
-  // Test d'interaction utilisateur
+  // User interaction testing
   test("should handle form input changes", () => {
     const InteractiveForm = () => {
       const [username, setUsername] = React.useState("");
@@ -85,7 +85,7 @@ describe("Basic Components Tests", () => {
     expect(screen.getByTestId("message")).toHaveTextContent("Bonjour Jean!");
   });
 
-  // Test de gestion d'état conditionnel
+  // Conditional State Management Test
   test("should handle conditional rendering", () => {
     const ConditionalComponent = () => {
       const [isVisible, setIsVisible] = React.useState(false);
@@ -104,22 +104,22 @@ describe("Basic Components Tests", () => {
 
     const button = screen.getByRole("button");
 
-    // Initialement masqué
+    // Originally hidden
     expect(screen.queryByTestId("content")).not.toBeInTheDocument();
     expect(button).toHaveTextContent("Afficher");
 
-    // Cliquer pour afficher
+    // Click to view
     fireEvent.click(button);
     expect(screen.getByTestId("content")).toBeInTheDocument();
     expect(button).toHaveTextContent("Masquer");
 
-    // Cliquer pour masquer
+    // Click to hide
     fireEvent.click(button);
     expect(screen.queryByTestId("content")).not.toBeInTheDocument();
     expect(button).toHaveTextContent("Afficher");
   });
 
-  // Test de validation de formulaire
+  // Test form validation
   test("should validate form inputs", () => {
     const ValidationForm = () => {
       const [email, setEmail] = React.useState("");
@@ -160,22 +160,22 @@ describe("Basic Components Tests", () => {
     const input = screen.getByPlaceholderText("Votre email");
     const button = screen.getByRole("button", { name: /valider/i });
 
-    // Test avec email vide
+    // Test empty email 
     fireEvent.click(button);
     expect(screen.getByTestId("error")).toHaveTextContent("Email requis");
 
-    // Test avec email invalide
+    // Test invalid email 
     fireEvent.change(input, { target: { value: "email-invalide" } });
     fireEvent.click(button);
     expect(screen.getByTestId("error")).toHaveTextContent("Email invalide");
 
-    // Test avec email valide
+    // Test valide email
     fireEvent.change(input, { target: { value: "test@example.com" } });
     fireEvent.click(button);
     expect(screen.queryByTestId("error")).not.toBeInTheDocument();
   });
 
-  // Test de gestion des listes
+  // Test list management
   test("should handle list rendering and interactions", () => {
     const ListComponent = () => {
       const [items, setItems] = React.useState(["Item 1", "Item 2"]);
@@ -215,11 +215,11 @@ describe("Basic Components Tests", () => {
 
     render(<ListComponent />);
 
-    // Vérifier les items initiaux
+    // Verify initial items
     expect(screen.getByText("Item 1")).toBeInTheDocument();
     expect(screen.getByText("Item 2")).toBeInTheDocument();
 
-    // Ajouter un nouvel item
+    // Add a new item
     const input = screen.getByPlaceholderText("Nouvel item");
     const addButton = screen.getByRole("button", { name: /ajouter/i });
 
@@ -228,7 +228,7 @@ describe("Basic Components Tests", () => {
 
     expect(screen.getByText("Item 3")).toBeInTheDocument();
 
-    // Supprimer un item
+    // Delete an item
     const deleteButtons = screen.getAllByText("Supprimer");
     fireEvent.click(deleteButtons[0]);
 

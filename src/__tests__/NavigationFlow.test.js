@@ -1,14 +1,14 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 
-// Mock des assets
+// Mock assets
 jest.mock("../assets/COFRAP_LOGO.png", () => "logo-mock.png");
 jest.mock("../assets/QRCode.png", () => "qr-code-mock.png");
 
-// Mock des fonctions de navigation
+// Mock navigation functions
 const mockNavigate = jest.fn();
 
-// Tests d'intégration simplifiés focalisés sur la logique métier
+// Simplified integration tests focused on business logic
 describe("Application Logic - Tests d'Intégration Simplifiés", () => {
   beforeEach(() => {
     localStorage.clear();
@@ -16,7 +16,7 @@ describe("Application Logic - Tests d'Intégration Simplifiés", () => {
   });
 
   test("should handle user signup flow", () => {
-    // Simuler le processus d'inscription
+    // Simulate the registration process
     const handleSignup = (username) => {
       if (username.trim()) {
         const capitalizedUsername =
@@ -35,7 +35,7 @@ describe("Application Logic - Tests d'Intégration Simplifiés", () => {
   });
 
   test("should handle user login flow", () => {
-    // Simuler le processus de connexion
+    // Simulate the login process
     const handleLogin = (username, password) => {
       if (username.trim() && password.trim()) {
         const capitalizedUsername =
@@ -75,7 +75,7 @@ describe("Application Logic - Tests d'Intégration Simplifiés", () => {
   });
 
   test("should handle dashboard access control", () => {
-    // Test sans utilisateur connecté
+    // Test without logged in user
     const checkDashboardAccess = () => {
       const username = localStorage.getItem("username");
       if (!username) {
@@ -88,7 +88,7 @@ describe("Application Logic - Tests d'Intégration Simplifiés", () => {
     expect(result.allowed).toBe(false);
     expect(result.redirectTo).toBe("/signin");
 
-    // Test avec utilisateur connecté
+    // Test with logged in user
     localStorage.setItem("username", "ValidUser");
     result = checkDashboardAccess();
     expect(result.allowed).toBe(true);
@@ -125,12 +125,12 @@ describe("Application Logic - Tests d'Intégration Simplifiés", () => {
       return { allowed: true, username };
     };
 
-    // Test sans authentification
+    // Test without authentification
     let result = checkAuthenticatedAccess();
     expect(result.allowed).toBe(false);
     expect(result.redirectTo).toBe("/login");
 
-    // Test avec authentification
+    // Test with authentification
     localStorage.setItem("username", "AuthUser");
     localStorage.setItem("authenticated", "true");
     result = checkAuthenticatedAccess();
@@ -139,7 +139,7 @@ describe("Application Logic - Tests d'Intégration Simplifiés", () => {
   });
 
   test("should handle logout process", () => {
-    // Préparer un utilisateur connecté
+    // Prepare connecteduser
     localStorage.setItem("username", "ConnectedUser");
     localStorage.setItem("authenticated", "true");
     localStorage.setItem("password_recovery", "false");
@@ -172,6 +172,6 @@ describe("Application Logic - Tests d'Intégration Simplifiés", () => {
 
     expect(result.redirectTo).toBe("/login");
     expect(localStorage.getItem("password_recovery")).toBeNull();
-    expect(localStorage.getItem("username")).toBe("TestUser"); // Reste
+    expect(localStorage.getItem("username")).toBe("TestUser");
   });
 });

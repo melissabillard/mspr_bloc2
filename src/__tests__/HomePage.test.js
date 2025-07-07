@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Home from "../pages/Home";
 
-// Mock react-router-dom COMPLETEMENT pour React Router v7
+// Mock react-router-dom COMPLETELY for React Router v7
 jest.mock("react-router-dom", () => ({
   BrowserRouter: ({ children }) => (
     <div data-testid="browser-router">{children}</div>
@@ -57,10 +57,10 @@ jest.mock("react-router-dom", () => ({
   ),
 }));
 
-// Import BrowserRouter après le mock
+// Import BrowserRouter after the mock
 const { BrowserRouter } = require("react-router-dom");
 
-// Mock des composants enfants pour isoler les tests de la page Home
+// Mock child components to isolate Home page tests
 jest.mock("../components/Hero", () => {
   return function MockHero() {
     return <div data-testid="hero-component">Hero Component</div>;
@@ -79,7 +79,7 @@ jest.mock("../components/CTA", () => {
   };
 });
 
-// Wrapper pour fournir le contexte Router
+// Wrapper to provide Router context
 const renderWithRouter = (component) => {
   return render(<BrowserRouter>{component}</BrowserRouter>);
 };
@@ -88,7 +88,7 @@ describe("Home Page - Tests Réels", () => {
   test("Home page renders correctly with all components", () => {
     renderWithRouter(<Home />);
 
-    // Vérifier que tous les composants enfants sont rendus
+    // Check that all child components are rendered
     expect(screen.getByTestId("hero-component")).toBeInTheDocument();
     expect(screen.getByTestId("features-component")).toBeInTheDocument();
     expect(screen.getByTestId("cta-component")).toBeInTheDocument();
@@ -97,11 +97,11 @@ describe("Home Page - Tests Réels", () => {
   test("Home page has correct CSS classes and structure", () => {
     const { container } = renderWithRouter(<Home />);
 
-    // Vérifier que le conteneur principal existe (plus spécifique sur les classes CSS)
+    // Check that the main container exists (more specific on CSS classes)
     const mainContainer = container.firstChild;
     expect(mainContainer).toBeInTheDocument();
 
-    // Vérifier la présence des composants mockés
+    // Check the presence of mocked components
     expect(screen.getByTestId("hero-component")).toBeInTheDocument();
     expect(screen.getByTestId("features-component")).toBeInTheDocument();
     expect(screen.getByTestId("cta-component")).toBeInTheDocument();
@@ -110,7 +110,7 @@ describe("Home Page - Tests Réels", () => {
   test("All child components are present and functional", () => {
     renderWithRouter(<Home />);
 
-    // Test d'intégration : vérifier que Home coordonne bien tous ses composants
+    // Integration testing: verify that Home coordinates all its components well
     const hero = screen.getByTestId("hero-component");
     const features = screen.getByTestId("features-component");
     const cta = screen.getByTestId("cta-component");
@@ -119,7 +119,7 @@ describe("Home Page - Tests Réels", () => {
     expect(features).toBeInTheDocument();
     expect(cta).toBeInTheDocument();
 
-    // Vérifier que tous les composants contiennent du texte
+    // Check that all components contain text
     expect(hero).toHaveTextContent("Hero Component");
     expect(features).toHaveTextContent("Features Component");
     expect(cta).toHaveTextContent("CTA Component");

@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Login from "../pages/Login/Login";
 
-// Mock fetch pour simuler les appels API
+// Mock fetch to simulate API calls
 global.fetch = jest.fn();
 
 // Mock localStorage
@@ -14,10 +14,10 @@ const localStorageMock = {
 };
 global.localStorage = localStorageMock;
 
-// Mock useNavigate avec une fonction spécifique pour ce test
+// Mock useNavigate with a specific function for this test
 const mockNavigate = jest.fn();
 
-// Mock react-router-dom COMPLETEMENT sans référence au module réel
+// Mock react-router-dom COMPLETELY without reference to the actual module
 jest.mock("react-router-dom", () => ({
   BrowserRouter: ({ children }) => (
     <div data-testid="browser-router">{children}</div>
@@ -73,17 +73,17 @@ jest.mock("react-router-dom", () => ({
   ),
 }));
 
-// Import BrowserRouter après le mock
+// Import BrowserRouter after the mock
 const { BrowserRouter } = require("react-router-dom");
 
-// Wrapper pour fournir le contexte Router
+// Wrapper to provide Router context
 const renderWithRouter = (component) => {
   return render(<BrowserRouter>{component}</BrowserRouter>);
 };
 
 describe("Login Page - Tests Réels", () => {
   beforeEach(() => {
-    // Reset des mocks
+    // Reset mocks
     jest.clearAllMocks();
     localStorageMock.setItem.mockClear();
     localStorageMock.removeItem.mockClear();
@@ -94,7 +94,7 @@ describe("Login Page - Tests Réels", () => {
   test("Login form renders correctly with all required fields", () => {
     renderWithRouter(<Login />);
 
-    // Vérifier que tous les champs requis sont présents
+    // Check that all required fields are present
     expect(screen.getByLabelText(/nom d'utilisateur/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/mot de passe/i)).toBeInTheDocument();
     expect(
@@ -111,14 +111,14 @@ describe("Login Page - Tests Réels", () => {
     const passwordInput = screen.getByLabelText(/mot de passe/i);
     const toggleButton = screen.getByRole("button", { name: "" }); // Bouton eye/eye-off
 
-    // Par défaut, le mot de passe est masqué
+    // By default, the password is hidden
     expect(passwordInput).toHaveAttribute("type", "password");
 
-    // Cliquer sur le bouton pour afficher le mot de passe
+    // Click the button to display the password
     await userEvent.click(toggleButton);
     expect(passwordInput).toHaveAttribute("type", "text");
 
-    // Cliquer à nouveau pour masquer le mot de passe
+    // Click again to hide the password
     await userEvent.click(toggleButton);
     expect(passwordInput).toHaveAttribute("type", "password");
   });
@@ -129,14 +129,14 @@ describe("Login Page - Tests Réels", () => {
     const usernameInput = screen.getByLabelText(/nom d'utilisateur/i);
     const passwordInput = screen.getByLabelText(/mot de passe/i);
 
-    // Initialement, le champ 2FA ne doit pas être visible
+    // Initially, the 2FA field should not be visible
     expect(screen.queryByLabelText(/code 2fa/i)).not.toBeInTheDocument();
 
-    // Remplir username et password
+    // Fill in username and password
     await userEvent.type(usernameInput, "testuser");
     await userEvent.type(passwordInput, "testpass");
 
-    // Maintenant le champ 2FA doit apparaître
+    // Now the 2FA field should appear
     expect(screen.getByLabelText(/code 2fa/i)).toBeInTheDocument();
   });
 
@@ -147,10 +147,10 @@ describe("Login Page - Tests Réels", () => {
 
     const submitButton = screen.getByRole("button", { name: /se connecter/i });
 
-    // Soumettre le formulaire sans remplir les champs
+    // Submit the form without filling in the fields
     await userEvent.click(submitButton);
 
-    // Vérifier que l'alerte est affichée
+    // Check that the alert is displayed
     expect(alertSpy).toHaveBeenCalledWith(
       "Veuillez remplir tous les champs, y compris le code 2FA."
     );
@@ -159,7 +159,7 @@ describe("Login Page - Tests Réels", () => {
   });
 
   test("Successful login with valid credentials and 2FA", async () => {
-    // Mock fetch pour retourner une réponse réussie
+    // Mock fetch to return a successful response
     fetch.mockResolvedValueOnce({
       ok: true,
       json: async () => ({ success: true, user: "testuser" }),
@@ -167,26 +167,26 @@ describe("Login Page - Tests Réels", () => {
 
     renderWithRouter(<Login />);
 
-    // Remplir le formulaire
+    // Fill out the form
     await userEvent.type(
       screen.getByLabelText(/nom d'utilisateur/i),
       "testuser"
     );
     await userEvent.type(screen.getByLabelText(/mot de passe/i), "testpass");
 
-    // Attendre que le champ 2FA apparaisse
+    // Wait for the 2FA field to appear
     await waitFor(() => {
       expect(screen.getByLabelText(/code 2fa/i)).toBeInTheDocument();
     });
 
     await userEvent.type(screen.getByLabelText(/code 2fa/i), "123456");
 
-    // Soumettre le formulaire
+    // Submit form
     await userEvent.click(
       screen.getByRole("button", { name: /se connecter/i })
     );
 
-    // Vérifier que le fetch a été appelé avec les bons paramètres
+    // Check that the fetch was called with the correct parameters
     expect(fetch).toHaveBeenCalledWith(
       "http://api.cofrap.local/function/authenticate-user",
       {
@@ -206,14 +206,14 @@ describe("Login Page - Tests Réels", () => {
   test("Login fails with invalid credentials", async () => {
     const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
 
-    // Mock fetch pour retourner une erreur
+    // Mock fetch to return an error
     fetch.mockResolvedValueOnce({
       ok: false,
     });
 
     renderWithRouter(<Login />);
 
-    // Remplir le formulaire
+    // Fill out the form
     await userEvent.type(
       screen.getByLabelText(/nom d'utilisateur/i),
       "wronguser"
@@ -221,19 +221,19 @@ describe("Login Page - Tests Réels", () => {
     await userEvent.type(screen.getByLabelText(/mot de passe/i), "wrongpass");
     await userEvent.type(screen.getByLabelText(/code 2fa/i), "000000");
 
-    // Soumettre le formulaire
+    // Submit form
     await userEvent.click(
       screen.getByRole("button", { name: /se connecter/i })
     );
 
-    // Vérifier que l'alerte d'erreur est affichée
+    // Check that the error alert is displayed
     await waitFor(() => {
       expect(alertSpy).toHaveBeenCalledWith(
         "Identifiants ou code 2FA incorrects."
       );
     });
 
-    // Vérifier que la navigation n'a pas eu lieu
+    // Check that navigation has not taken place
     expect(mockNavigate).not.toHaveBeenCalled();
 
     alertSpy.mockRestore();
@@ -242,10 +242,10 @@ describe("Login Page - Tests Réels", () => {
   test("Navigation links work correctly", async () => {
     renderWithRouter(<Login />);
 
-    // Vérifier que les liens de navigation sont présents
+    // Check that the navigation links are present
     expect(screen.getByText(/créer un compte/i)).toBeInTheDocument();
     expect(screen.getByText(/mot de passe oublié/i)).toBeInTheDocument();
-    // Utiliser getAllByText pour gérer les éléments multiples contenant "COFRAP"
+    // Use getAllByText to handle multiple elements containing "COFRAP"
     const cofrapElements = screen.getAllByText(/cofrap/i);
     expect(cofrapElements.length).toBeGreaterThan(0);
   });
@@ -256,15 +256,15 @@ describe("Login Page - Tests Réels", () => {
     const usernameInput = screen.getByLabelText(/nom d'utilisateur/i);
     const passwordInput = screen.getByLabelText(/mot de passe/i);
 
-    // Taper dans les champs
+    // Type in the fields
     await userEvent.type(usernameInput, "test");
     await userEvent.type(passwordInput, "password");
 
-    // Vérifier que les valeurs sont mises à jour
+    // Check that the values ​​are updated
     expect(usernameInput).toHaveValue("test");
     expect(passwordInput).toHaveValue("password");
 
-    // Vérifier que le champ 2FA apparaît
+    // Check that the 2FA field appears
     expect(screen.getByLabelText(/code 2fa/i)).toBeInTheDocument();
   });
 });
